@@ -1,0 +1,836 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pages. Presentar - Innovation Edition</title>
+    <!-- Multi-Fonts Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Courier+Prime&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&family=Oswald:wght@400;600&family=Pacifico&family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Variables de base (Thème Clear Glass par défaut) */
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            --glass-blur: blur(16px);
+            
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-primary: #c084fc;
+            --accent-hover: #d8b4fe;
+            --accent-gradient: linear-gradient(135deg, #c084fc, #f472b6);
+            
+            --slide-bg: #ffffff;
+            --bg-anim-1: #0f172a;
+            --bg-anim-2: #312e81;
+            --bg-anim-3: #701a75;
+            --bg-anim-4: #4c1d95;
+            
+            --input-bg: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Thème: Dark Matter */
+        body.theme-dark-matter {
+            --glass-bg: rgba(10, 10, 15, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --accent-primary: #00f0ff;
+            --accent-gradient: linear-gradient(135deg, #00f0ff, #0055ff);
+            --bg-anim-1: #050505;
+            --bg-anim-2: #11111a;
+            --bg-anim-3: #0a0a0f;
+            --bg-anim-4: #151520;
+        }
+
+        /* Thème: Holographic */
+        body.theme-holo {
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --accent-primary: #ff00ea;
+            --accent-gradient: linear-gradient(135deg, #ff00ea, #00eaff);
+            --text-main: #000000;
+            --text-muted: rgba(0, 0, 0, 0.6);
+            --bg-anim-1: #e0c3fc;
+            --bg-anim-2: #8ec5fc;
+            --bg-anim-3: #ffd1ff;
+            --bg-anim-4: #a1c4fd;
+            --input-bg: rgba(255, 255, 255, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, var(--bg-anim-1), var(--bg-anim-2), var(--bg-anim-3), var(--bg-anim-4));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            padding: 12px;
+            gap: 12px;
+            transition: color 0.5s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Utilitaire Glass */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 16px;
+            transition: all 0.5s ease;
+        }
+
+        /* Scrollbars custom */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, 0.4); border-radius: 10px; }
+
+        /* En-tête Principal */
+        .app-header {
+            height: 64px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 20;
+        }
+
+        .brand-logo {
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+        }
+
+        .brand-logo .pages { font-weight: 800; }
+        .brand-logo .presentar {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .doc-title-input {
+            background: rgba(128, 128, 128, 0.1);
+            border: 1px solid transparent;
+            color: inherit;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            width: 250px;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .doc-title-input:focus { border-color: var(--glass-border); background: var(--input-bg); }
+
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+
+        .theme-selector {
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            color: inherit;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            outline: none;
+        }
+        
+        .theme-selector option { background: #1e293b; color: white; }
+
+        /* Boutons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            transition: all 0.2s ease;
+            user-select: none;
+            white-space: nowrap;
+            color: var(--text-main);
+            background: rgba(128, 128, 128, 0.1);
+            backdrop-filter: blur(4px);
+        }
+
+        .btn:hover { background: rgba(128, 128, 128, 0.2); transform: translateY(-1px); }
+        .btn:active { transform: translateY(1px); }
+
+        .btn-purple {
+            background: var(--accent-gradient);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .btn-purple:hover { filter: brightness(1.1); }
+        .btn-icon { padding: 8px; width: 36px; height: 36px; }
+
+        /* Barre d'outils */
+        .toolbar {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            overflow-x: auto;
+            z-index: 10;
+        }
+
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-right: 20px;
+            border-right: 1px solid var(--glass-border);
+        }
+        .tool-group:last-child { border-right: none; }
+        .tool-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; }
+
+        .select-input, .number-input {
+            height: 36px;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0 12px;
+            font-size: 0.85rem;
+            background-color: var(--input-bg);
+            color: inherit;
+            outline: none;
+        }
+        .select-input option { background-color: #1e293b; color: white; }
+
+        .color-input { width: 36px; height: 36px; padding: 2px; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--input-bg); cursor: pointer; }
+        .color-input::-webkit-color-swatch-wrapper { padding: 2px; }
+        .color-input::-webkit-color-swatch { border-radius: 4px; border: none; }
+
+        /* Workspace */
+        .workspace { display: flex; flex: 1; gap: 12px; overflow: hidden; }
+
+        /* Sidebar Gauche */
+        .slides-sidebar { width: 220px; display: flex; flex-direction: column; padding: 16px; gap: 16px; overflow-y: auto; }
+        
+        .slide-thumbnail {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #ffffff;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+        .slide-thumbnail:hover { transform: translateY(-2px) scale(1.02); }
+        .slide-thumbnail.active { border-color: var(--accent-primary); box-shadow: 0 0 0 4px rgba(255,255,255,0.2); }
+        .slide-number { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.5); color: white; font-size: 0.75rem; padding: 4px 8px; border-radius: 6px; }
+
+        /* Stage (Canvas Central) */
+        .stage-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: auto;
+            background: radial-gradient(circle at center, rgba(128,128,128,0.1) 0%, transparent 70%);
+        }
+
+        .slide-canvas {
+            width: 960px;
+            height: 540px;
+            background-color: var(--slide-bg);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Éléments Canvas */
+        .canvas-element {
+            position: absolute;
+            cursor: move;
+            user-select: none;
+            padding: 4px;
+            border: 2px solid transparent;
+            border-radius: 4px;
+        }
+        .canvas-element.selected {
+            border: 2px dashed var(--accent-primary);
+            background: rgba(128,128,128,0.05);
+        }
+        .canvas-element img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .canvas-element iframe, .canvas-element video { width: 100%; height: 100%; border: none; pointer-events: auto; }
+        
+        /* Cam Element */
+        .cam-element video {
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.5);
+        }
+
+        /* Inspector Droite */
+        .inspector-sidebar { width: 280px; padding: 20px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
+        .panel-title { font-size: 0.95rem; font-weight: 700; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; }
+        .form-field { display: flex; flex-direction: column; gap: 8px; }
+        .form-field label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+        .form-field textarea { resize: vertical; min-height: 80px; }
+
+        /* Mode Présentation */
+        #presentation-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #000;
+            z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        #presentation-overlay.active { display: flex; cursor: none; /* Cache curseur base si pointeur laser activé */ }
+
+        .present-slide {
+            width: 100vw; height: 56.25vw; max-height: 100vh; max-width: 177.78vh;
+            background-color: #ffffff; position: relative; overflow: hidden;
+        }
+
+        /* Pointeur Laser CSS */
+        #laser-pointer {
+            display: none;
+            position: fixed;
+            width: 12px; height: 12px;
+            background-color: #ff0044;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            box-shadow: 0 0 15px 5px rgba(255,0,68,0.6);
+            transform: translate(-50%, -50%);
+            transition: width 0.1s, height 0.1s;
+        }
+        #laser-pointer.active { display: block; }
+        #laser-pointer.clicking { width: 8px; height: 8px; background-color: #ffffff; box-shadow: 0 0 20px 8px rgba(255,0,68,0.8); }
+
+        /* Animations Pro */
+        .trans-fade-enter { animation: fadeIn 0.8s ease forwards; }
+        .trans-blur-enter { animation: blurScaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .trans-3d-flip-enter { animation: flipIn3D 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; perspective: 1500px; transform-style: preserve-3d; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes blurScaleIn { from { transform: scale(1.05); filter: blur(20px); opacity: 0; } to { transform: scale(1); filter: blur(0); opacity: 1; } }
+        @keyframes flipIn3D { from { transform: rotateY(-90deg); opacity: 0; } to { transform: rotateY(0deg); opacity: 1; } }
+
+        /* Anim éléments */
+        .anim-fade { animation: fadeIn 1s ease forwards; }
+        .anim-slide-up { animation: slideUpUltra 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .anim-pop { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+        @keyframes slideUpUltra { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* Contrôles de présentation */
+        .present-controls {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(12px);
+            padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
+            display: flex; gap: 16px; align-items: center; z-index: 10000;
+            opacity: 0; transition: opacity 0.3s, transform 0.3s;
+        }
+        #presentation-overlay:mousemove .present-controls, .present-controls:hover { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+        .present-controls button { background: rgba(255,255,255,0.1); border: 1px solid transparent; color: white; padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+        .present-controls button:hover { background: rgba(255,255,255,0.2); }
+        .present-controls .info-badge { font-size: 0.75rem; color: #a1a1aa; margin-left: 10px; border-left: 1px solid #52525b; padding-left: 10px;}
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header glass-panel">
+        <div class="brand-logo">
+            <span class="pages">The Pages.</span>
+            <span class="presentar">Presentar</span>
+        </div>
+        
+        <input type="text" id="presentation-title" class="doc-title-input" value="Nouveau Projet Innovant">
+        
+        <div class="header-actions">
+            <select class="theme-selector" onchange="document.body.className = this.value">
+                <option value="">Thème: Clear Glass</option>
+                <option value="theme-dark-matter">Thème: Dark Matter</option>
+                <option value="theme-holo">Thème: Holographic</option>
+            </select>
+            <button class="btn btn-purple" onclick="startPresentation()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Présenter
+            </button>
+        </div>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="toolbar glass-panel">
+        <div class="tool-group">
+            <span class="tool-label">Slides</span>
+            <button class="btn" onclick="addNewSlide()">+ Slide</button>
+            <button class="btn btn-icon" onclick="duplicateCurrentSlide()" title="Dupliquer">📋</button>
+            <select id="slide-transition-select" class="select-input" style="width: 160px;" onchange="updateSlideTransition(this.value)">
+                <option value="trans-blur-enter">Trans: Flou Cinétique</option>
+                <option value="trans-fade-enter">Trans: Fondu Classique</option>
+                <option value="trans-3d-flip-enter">Trans: Flip 3D (Pro)</option>
+            </select>
+        </div>
+
+        <div class="tool-group">
+            <span class="tool-label">Typographie</span>
+            <button class="btn" onclick="addTextElement()">+ Texte</button>
+            <!-- Liste de fonts étendue -->
+            <select id="font-family-select" class="select-input" style="width: 160px;" onchange="updateSelectedStyle('fontFamily', this.value)">
+                <option value="'Inter', sans-serif">Inter (Moderne)</option>
+                <option value="'Poppins', sans-serif">Poppins (Géométrique)</option>
+                <option value="'Montserrat', sans-serif">Montserrat</option>
+                <option value="'Roboto', sans-serif">Roboto</option>
+                <option value="'Playfair Display', serif">Playfair (Luxe)</option>
+                <option value="'Cinzel', serif">Cinzel (Cinéma)</option>
+                <option value="'Oswald', sans-serif">Oswald (Impact)</option>
+                <option value="'Pacifico', cursive">Pacifico (Manuscrit)</option>
+                <option value="'Courier Prime', monospace">Courier (Machine)</option>
+                <option value="'Space Mono', monospace">Space Mono (Tech)</option>
+            </select>
+            <input type="number" id="font-size-input" class="number-input" value="28" style="width: 60px;" onchange="updateSelectedStyle('fontSize', this.value + 'px')">
+            <input type="color" id="text-color-input" class="color-input" value="#0f172a" onchange="updateSelectedStyle('color', this.value)">
+            <button class="btn btn-icon" onclick="toggleStyle('fontWeight', 'bold', 'normal')"><b>B</b></button>
+            <button class="btn btn-icon" onclick="toggleStyle('fontStyle', 'italic', 'normal')"><i>I</i></button>
+        </div>
+
+        <div class="tool-group">
+            <span class="tool-label">Innovations</span>
+            <button class="btn" onclick="promptAddImage()" title="Image classique">🖼️ Image</button>
+            <button class="btn" onclick="promptAddVideo()" title="Vidéo MP4/YouTube">🎬 Vidéo</button>
+            <button class="btn" onclick="promptAddWebEmbed()" title="Intégrer un site web interactif">🌐 Site Web</button>
+            <button class="btn" style="color: #ff3366;" onclick="addCameraElement()" title="Ta Webcam en direct dans la slide !">📷 Live Cam</button>
+        </div>
+        
+        <div class="tool-group">
+            <span class="tool-label">Fond</span>
+            <input type="color" id="bg-color-input" class="color-input" value="#ffffff" onchange="updateSlideBackground(this.value)">
+        </div>
+    </div>
+
+    <!-- Workspace -->
+    <div class="workspace">
+        <div class="slides-sidebar glass-panel" id="slides-container"></div>
+        
+        <div class="stage-container" onclick="deselectAll(event)">
+            <div class="slide-canvas" id="main-canvas"></div>
+        </div>
+
+        <div class="inspector-sidebar glass-panel">
+            <h3 class="panel-title">Propriétés</h3>
+            <div id="inspector-content">
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Sélectionnez un élément pour le modifier.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Présentation Overlay -->
+    <div id="presentation-overlay">
+        <!-- Curseur Laser -->
+        <div id="laser-pointer"></div>
+
+        <div class="present-slide" id="presentation-stage"></div>
+        <div class="present-controls">
+            <button onclick="prevPresentSlide()">◀ Précédent</button>
+            <span style="color: white; font-weight: bold;" id="present-slide-counter">1 / 1</span>
+            <button onclick="nextPresentSlide()">Suivant ▶</button>
+            <button onclick="exitPresentation()" style="color: #ff4d4f;">✕ Quitter</button>
+            <span class="info-badge">Astuce: Maintiens 'L' pour le Laser</span>
+        </div>
+    </div>
+
+    <script>
+        // Structure de données de présentation (Template Démo)
+        let presentation = {
+            slides: [
+                {
+                    id: 1, background: '#ffffff', transition: 'trans-blur-enter',
+                    elements: [
+                        { id: 'e1', type: 'text', content: 'Une Nouvelle Ère', x: 80, y: 150, width: 800, fontSize: '72px', fontFamily: "'Cinzel', serif", color: '#1e293b', fontWeight: 'bold', animation: 'anim-slide-up' },
+                        { id: 'e2', type: 'text', content: 'Le seul outil de présentation intégrant Webcam, Streaming & 3D en temps réel.', x: 80, y: 250, width: 600, fontSize: '24px', fontFamily: "'Inter', sans-serif", color: '#475569', animation: 'anim-fade' }
+                    ]
+                },
+                {
+                    id: 2, background: '#0f172a', transition: 'trans-3d-flip-enter',
+                    elements: [
+                        { id: 'e3', type: 'text', content: 'Démo Vidéo Intégrée', x: 50, y: 50, width: 500, fontSize: '42px', fontFamily: "'Poppins', sans-serif", color: '#ffffff', fontWeight: 'bold', animation: 'anim-slide-up' },
+                        { id: 'e4', type: 'video', content: 'https://www.w3schools.com/html/mov_bbb.mp4', x: 50, y: 120, width: 600, height: 340, animation: 'anim-pop' }
+                    ]
+                }
+            ]
+        };
+
+        let currentSlideIndex = 0;
+        let selectedElementId = null;
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+        
+        // Flux Caméra global
+        let mediaStream = null;
+
+        window.onload = () => { renderSidebar(); renderCanvas(); };
+
+        function getCurrentSlide() { return presentation.slides[currentSlideIndex]; }
+
+        // --- Rendu ---
+        function renderSidebar() {
+            const container = document.getElementById('slides-container');
+            container.innerHTML = '';
+            presentation.slides.forEach((slide, idx) => {
+                const thumb = document.createElement('div');
+                thumb.className = `slide-thumbnail ${idx === currentSlideIndex ? 'active' : ''}`;
+                thumb.style.backgroundColor = slide.background;
+                thumb.onclick = (e) => { e.stopPropagation(); switchSlide(idx); };
+                thumb.innerHTML = `<span class="slide-number">${idx + 1}</span>`;
+                container.appendChild(thumb);
+            });
+            document.getElementById('bg-color-input').value = getCurrentSlide().background;
+            document.getElementById('slide-transition-select').value = getCurrentSlide().transition || 'trans-blur-enter';
+        }
+
+        function switchSlide(idx) {
+            currentSlideIndex = idx;
+            selectedElementId = null;
+            renderSidebar(); renderCanvas(); renderInspector();
+        }
+
+        function renderCanvas() {
+            const canvas = document.getElementById('main-canvas');
+            const slide = getCurrentSlide();
+            canvas.style.backgroundColor = slide.background.startsWith('#') ? slide.background : '#ffffff';
+            canvas.innerHTML = '';
+
+            slide.elements.forEach(el => {
+                const domEl = document.createElement('div');
+                domEl.className = `canvas-element ${el.id === selectedElementId ? 'selected' : ''}`;
+                domEl.style.left = el.x + 'px';
+                domEl.style.top = el.y + 'px';
+
+                if (el.type === 'text') {
+                    domEl.innerText = el.content;
+                    domEl.style.fontSize = el.fontSize || '24px';
+                    domEl.style.fontFamily = el.fontFamily || "'Inter', sans-serif";
+                    domEl.style.color = el.color || '#000';
+                    domEl.style.fontWeight = el.fontWeight || 'normal';
+                    domEl.style.fontStyle = el.fontStyle || 'normal';
+                    if (el.width) domEl.style.width = el.width + 'px';
+                } 
+                else if (el.type === 'image') {
+                    domEl.innerHTML = `<img src="${el.content}" style="width:${el.width}px; height:${el.height}px;">`;
+                } 
+                else if (el.type === 'video') {
+                    let w = el.width || 400, h = el.height || 225;
+                    if (el.content.includes('youtube.com') || el.content.includes('youtu.be')) {
+                        let embedUrl = el.content.replace('watch?v=', 'embed/');
+                        domEl.innerHTML = `<iframe src="${embedUrl}" style="width:${w}px; height:${h}px;"></iframe>`;
+                    } else {
+                        domEl.innerHTML = `<video src="${el.content}" controls style="width:${w}px; height:${h}px; background:#000;"></video>`;
+                    }
+                }
+                else if (el.type === 'web') {
+                    domEl.innerHTML = `<iframe src="${el.content}" style="width:${el.width}px; height:${el.height}px; border:1px solid #ccc; background:#fff;"></iframe>`;
+                }
+                else if (el.type === 'camera') {
+                    domEl.classList.add('cam-element');
+                    domEl.innerHTML = `<video id="cam-${el.id}" autoplay muted playsinline style="width:${el.width}px; height:${el.height}px; background:#222;"></video>`;
+                    // Attach stream if exists
+                    setTimeout(() => {
+                        if (mediaStream) document.getElementById(`cam-${el.id}`).srcObject = mediaStream;
+                    }, 50);
+                }
+
+                // Drag Logic
+                domEl.onmousedown = (e) => {
+                    if (e.target.tagName === 'IFRAME' || (e.target.tagName === 'VIDEO' && el.type !== 'camera')) return;
+                    isDragging = true;
+                    selectElement(el.id);
+                    const rect = canvas.getBoundingClientRect();
+                    dragOffset.x = e.clientX - rect.left - el.x;
+                    dragOffset.y = e.clientY - rect.top - el.y;
+                    document.onmousemove = onDragMove;
+                    document.onmouseup = onDragEnd;
+                };
+                canvas.appendChild(domEl);
+            });
+        }
+
+        function onDragMove(e) {
+            if (!isDragging || !selectedElementId) return;
+            const canvas = document.getElementById('main-canvas');
+            const rect = canvas.getBoundingClientRect();
+            let newX = e.clientX - rect.left - dragOffset.x;
+            let newY = e.clientY - rect.top - dragOffset.y;
+            
+            const slide = getCurrentSlide();
+            const el = slide.elements.find(item => item.id === selectedElementId);
+            if (el) { el.x = newX; el.y = newY; renderCanvas(); }
+        }
+
+        function onDragEnd() { isDragging = false; document.onmousemove = null; document.onmouseup = null; }
+
+        function selectElement(id) {
+            selectedElementId = id;
+            renderCanvas(); renderInspector();
+            
+            // Sync Toolbar Text
+            const el = getCurrentSlide().elements.find(i => i.id === id);
+            if(el && el.type === 'text') {
+                if(el.fontFamily) document.getElementById('font-family-select').value = el.fontFamily;
+                if(el.fontSize) document.getElementById('font-size-input').value = parseInt(el.fontSize);
+                if(el.color) document.getElementById('text-color-input').value = el.color;
+            }
+        }
+
+        function deselectAll(e) {
+            if (e.target.id === 'main-canvas' || e.target.classList.contains('stage-container')) {
+                selectedElementId = null; renderCanvas(); renderInspector();
+            }
+        }
+
+        // --- Inspector ---
+        function renderInspector() {
+            const container = document.getElementById('inspector-content');
+            const el = getCurrentSlide().elements.find(i => i.id === selectedElementId);
+            
+            if (!el) { container.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem;">Sélectionnez un élément.</p>'; return; }
+
+            let html = `<div class="form-field"><label>Type</label><input class="select-input" value="${el.type.toUpperCase()}" disabled></div>`;
+
+            if (el.type === 'text') {
+                html += `<div class="form-field"><label>Contenu</label><textarea class="select-input" onkeyup="updateElementProp('content', this.value)">${el.content}</textarea></div>`;
+            } else if (el.type !== 'camera') {
+                html += `<div class="form-field"><label>URL / Source</label><input class="select-input" value="${el.content}" onchange="updateElementProp('content', this.value)"></div>`;
+            }
+
+            if (el.type !== 'text') {
+                html += `
+                    <div class="form-field"><label>Largeur</label><input type="number" class="number-input" value="${el.width}" onchange="updateElementProp('width', parseInt(this.value))"></div>
+                    <div class="form-field"><label>Hauteur</label><input type="number" class="number-input" value="${el.height}" onchange="updateElementProp('height', parseInt(this.value))"></div>
+                `;
+            }
+
+            html += `
+                <div class="form-field">
+                    <label>Animation (Entrée)</label>
+                    <select class="select-input" onchange="updateElementProp('animation', this.value)">
+                        <option value="" ${!el.animation ? 'selected' : ''}>Aucune</option>
+                        <option value="anim-fade" ${el.animation === 'anim-fade' ? 'selected' : ''}>Fondu simple</option>
+                        <option value="anim-slide-up" ${el.animation === 'anim-slide-up' ? 'selected' : ''}>Glissement haut</option>
+                        <option value="anim-pop" ${el.animation === 'anim-pop' ? 'selected' : ''}>Pop 3D</option>
+                    </select>
+                </div>
+                <button class="btn" style="margin-top:15px; color:#ef4444; border-color:#ef4444;" onclick="deleteSelected()">🗑 Supprimer</button>
+            `;
+            container.innerHTML = html;
+        }
+
+        function updateElementProp(p, v) { 
+            const el = getCurrentSlide().elements.find(i => i.id === selectedElementId);
+            if (el) { el[p] = v; renderCanvas(); }
+        }
+
+        function updateSelectedStyle(p, v) { if (selectedElementId) updateElementProp(p, v); }
+        function toggleStyle(p, v1, v2) {
+            const el = getCurrentSlide().elements.find(i => i.id === selectedElementId);
+            if (el) { el[p] = (el[p] === v1) ? v2 : v1; renderCanvas(); }
+        }
+        function deleteSelected() {
+            getCurrentSlide().elements = getCurrentSlide().elements.filter(i => i.id !== selectedElementId);
+            selectedElementId = null; renderCanvas(); renderInspector();
+        }
+
+        // --- Outils d'ajout ---
+        function addNewSlide() {
+            presentation.slides.push({ id: Date.now(), background: '#ffffff', transition: 'trans-blur-enter', elements: [] });
+            switchSlide(presentation.slides.length - 1);
+        }
+        function duplicateCurrentSlide() {
+            let clone = JSON.parse(JSON.stringify(getCurrentSlide()));
+            clone.id = Date.now();
+            presentation.slides.splice(currentSlideIndex + 1, 0, clone);
+            switchSlide(currentSlideIndex + 1);
+        }
+        function updateSlideTransition(v) { getCurrentSlide().transition = v; }
+        function updateSlideBackground(v) { getCurrentSlide().background = v; renderSidebar(); renderCanvas(); }
+
+        function addTextElement() {
+            getCurrentSlide().elements.push({ id: 'el_'+Date.now(), type: 'text', content: 'Votre texte', x: 100, y: 100, fontSize: '32px', fontFamily: "'Inter', sans-serif", color: '#000000', animation: 'anim-slide-up', width: 400 });
+            selectElement(getCurrentSlide().elements[getCurrentSlide().elements.length-1].id);
+        }
+        function promptAddImage() {
+            const url = prompt("URL de l'image :");
+            if(url) {
+                getCurrentSlide().elements.push({ id: 'el_'+Date.now(), type: 'image', content: url, x: 100, y: 100, width: 400, height: 300, animation: 'anim-pop' });
+                renderCanvas();
+            }
+        }
+        function promptAddVideo() {
+            const url = prompt("Lien Vidéo (YouTube ou MP4) :");
+            if(url) {
+                getCurrentSlide().elements.push({ id: 'el_'+Date.now(), type: 'video', content: url, x: 100, y: 100, width: 560, height: 315 });
+                renderCanvas();
+            }
+        }
+        function promptAddWebEmbed() {
+            const url = prompt("URL du site Web à intégrer (HTTPS obligatoire) :", "https://fr.wikipedia.org");
+            if(url) {
+                getCurrentSlide().elements.push({ id: 'el_'+Date.now(), type: 'web', content: url, x: 50, y: 50, width: 800, height: 450 });
+                renderCanvas();
+            }
+        }
+
+        // Feature Jamais Vue : Live Cam
+        async function addCameraElement() {
+            try {
+                if (!mediaStream) mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                getCurrentSlide().elements.push({ id: 'el_'+Date.now(), type: 'camera', x: 50, y: 50, width: 320, height: 240, animation: 'anim-pop' });
+                renderCanvas();
+            } catch (err) {
+                alert("Impossible d'accéder à la caméra. Vérifie tes permissions !");
+            }
+        }
+
+        // --- MODE PRÉSENTATION & LASER POINTER ---
+        let presentIndex = 0;
+        let isLaserActive = false;
+
+        function startPresentation() {
+            presentIndex = currentSlideIndex;
+            document.getElementById('presentation-overlay').classList.add('active');
+            renderPresentSlide();
+            document.addEventListener('keydown', handlePresentKey);
+            document.addEventListener('keyup', handlePresentKeyUp);
+            document.getElementById('presentation-overlay').addEventListener('mousemove', handleLaserMove);
+            document.getElementById('presentation-overlay').addEventListener('mousedown', () => document.getElementById('laser-pointer').classList.add('clicking'));
+            document.getElementById('presentation-overlay').addEventListener('mouseup', () => document.getElementById('laser-pointer').classList.remove('clicking'));
+        }
+
+        function exitPresentation() {
+            document.getElementById('presentation-overlay').classList.remove('active');
+            document.removeEventListener('keydown', handlePresentKey);
+            document.removeEventListener('keyup', handlePresentKeyUp);
+            document.getElementById('presentation-stage').innerHTML = ''; // Couper médias
+            isLaserActive = false;
+            document.getElementById('laser-pointer').classList.remove('active');
+        }
+
+        function handlePresentKey(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextPresentSlide();
+            else if (e.key === 'ArrowLeft') prevPresentSlide();
+            else if (e.key === 'Escape') exitPresentation();
+            else if (e.key.toLowerCase() === 'l' && !isLaserActive) {
+                isLaserActive = true;
+                document.getElementById('laser-pointer').classList.add('active');
+            }
+        }
+
+        function handlePresentKeyUp(e) {
+            if (e.key.toLowerCase() === 'l') {
+                isLaserActive = false;
+                document.getElementById('laser-pointer').classList.remove('active');
+            }
+        }
+
+        function handleLaserMove(e) {
+            if (!isLaserActive) return;
+            const pointer = document.getElementById('laser-pointer');
+            pointer.style.left = e.clientX + 'px';
+            pointer.style.top = e.clientY + 'px';
+        }
+
+        function renderPresentSlide() {
+            const stage = document.getElementById('presentation-stage');
+            const slide = presentation.slides[presentIndex];
+            document.getElementById('present-slide-counter').innerText = `${presentIndex + 1} / ${presentation.slides.length}`;
+
+            stage.style.backgroundColor = slide.background;
+            
+            // Hack force reflow for CSS animation
+            stage.className = 'present-slide';
+            void stage.offsetWidth; 
+            stage.className = `present-slide ${slide.transition || 'trans-blur-enter'}`;
+            
+            stage.innerHTML = '';
+
+            slide.elements.forEach(el => {
+                const domEl = document.createElement('div');
+                domEl.style.position = 'absolute';
+                domEl.style.left = (el.x / 960 * 100) + '%';
+                domEl.style.top = (el.y / 540 * 100) + '%';
+                if (el.animation) domEl.className = el.animation;
+
+                if (el.type === 'text') {
+                    domEl.innerText = el.content;
+                    domEl.style.fontSize = `calc(${parseInt(el.fontSize)} * (100vw / 960))`;
+                    domEl.style.fontFamily = el.fontFamily;
+                    domEl.style.color = el.color;
+                    domEl.style.fontWeight = el.fontWeight;
+                    domEl.style.fontStyle = el.fontStyle;
+                    if (el.width) domEl.style.width = `calc(${el.width} * (100vw / 960))`;
+                } 
+                else if (el.type === 'image') {
+                    domEl.innerHTML = `<img src="${el.content}" style="width:calc(${el.width} * (100vw / 960)); height:calc(${el.height} * (100vw / 960)); object-fit:cover;">`;
+                } 
+                else if (el.type === 'video') {
+                    let w = `calc(${el.width} * (100vw / 960))`, h = `calc(${el.height} * (100vw / 960))`;
+                    if (el.content.includes('youtube.com') || el.content.includes('youtu.be')) {
+                        let embedUrl = el.content.replace('watch?v=', 'embed/') + '?autoplay=1';
+                        domEl.innerHTML = `<iframe src="${embedUrl}" style="width:${w}; height:${h}; border:none;" allow="autoplay"></iframe>`;
+                    } else {
+                        domEl.innerHTML = `<video src="${el.content}" autoplay controls style="width:${w}; height:${h};"></video>`;
+                    }
+                }
+                else if (el.type === 'web') {
+                    let w = `calc(${el.width} * (100vw / 960))`, h = `calc(${el.height} * (100vw / 960))`;
+                    domEl.innerHTML = `<iframe src="${el.content}" style="width:${w}; height:${h}; border:none; background:#fff;"></iframe>`;
+                }
+                else if (el.type === 'camera') {
+                    domEl.classList.add('cam-element');
+                    let w = `calc(${el.width} * (100vw / 960))`, h = `calc(${el.height} * (100vw / 960))`;
+                    domEl.innerHTML = `<video id="present-cam-${el.id}" autoplay muted playsinline style="width:${w}; height:${h};"></video>`;
+                    setTimeout(() => { if (mediaStream) document.getElementById(`present-cam-${el.id}`).srcObject = mediaStream; }, 50);
+                }
+                stage.appendChild(domEl);
+            });
+        }
+
+        function nextPresentSlide() { if (presentIndex < presentation.slides.length - 1) { presentIndex++; renderPresentSlide(); } }
+        function prevPresentSlide() { if (presentIndex > 0) { presentIndex--; renderPresentSlide(); } }
+    </script>
+</body>
+</html>
+
+```
