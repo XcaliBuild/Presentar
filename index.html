@@ -3,238 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Pages. Presentar</title>
+    <title>The Pages. Presentar - Pro Edition</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='6' width='14' height='16' rx='2' fill='%230A0C10' stroke='%23C9A430' stroke-width='1.4'/%3E%3Crect x='7' y='2' width='14' height='16' rx='2' fill='%23161B24' stroke='%23C9A430' stroke-width='1.4'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Chargement de multiples polices professionnelles -->
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&family=Oswald:wght@400;600&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;700&family=Space+Mono&family=Cinzel:wght@600;700&family=Pacifico&family=Raleway:wght@400;700&family=Lato:wght@400;700&family=Merriweather:wght@400;700&family=Nunito:wght@400;700&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- Librairies : PptxGenJS (Export PowerPoint) & LocalForage (IndexedDB) -->
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/libs/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.min.js"></script>
-    <script src="https://unpkg.com/localforage@1.10.0/dist/localforage.min.js"></script> <style>
+    <script src="https://unpkg.com/localforage@1.10.0/dist/localforage.min.js"></script>
+
+    <style>
         :root{
-            --ink-950:#0A0C10; --ink-900:#12151C; --ink-850:#171B24; --ink-800:#1B2029; --ink-750:#232936;
-            --ink-border: rgba(255,255,255,0.08); --ink-border-strong: rgba(255,255,255,0.14);
+            --ink-950:#050608; --ink-900:#0A0C10; --ink-850:#12151C; --ink-800:#171B24; --ink-750:#1B2029;
+            --ink-border: rgba(255,255,255,0.08); --ink-border-strong: rgba(255,255,255,0.15);
             --gold-600:#A9871F; --gold-500:#C9A430; --gold-400:#E3BE55; --gold-tint: rgba(201,164,48,0.15);
             --text-hi:#F2F1ED; --text-mid:#AEB2BE; --text-low:#767A88; --danger:#E5626A; --danger-tint: rgba(229,98,106,0.14);
-            --radius-sm:8px; --radius-md:12px; --radius-lg:18px;
-            --shadow-panel: 0 1px 2px rgba(0,0,0,0.45), 0 12px 30px rgba(0,0,0,0.35);
-            --shadow-pop: 0 20px 60px rgba(0,0,0,0.5);
-            --app-bg-1:#0A0C10; --app-bg-2:#141824; --app-bg-3:#0D1018;
-            --panel-bg: rgba(23,27,36,0.72); --panel-blur: blur(18px); --field-bg: rgba(255,255,255,0.04);
+            --radius-sm:6px; --radius-md:10px; --radius-lg:16px;
+            --shadow-panel: 0 4px 12px rgba(0,0,0,0.3); --shadow-pop: 0 20px 50px rgba(0,0,0,0.6);
+            --app-bg-1:#050608; --app-bg-2:#0A0C10; --app-bg-3:#12151C;
+            --panel-bg: rgba(18,21,28,0.85); --panel-blur: blur(24px); --field-bg: rgba(255,255,255,0.05);
         }
 
         body.theme-papier{
-            --ink-950:#EFEAE0; --ink-900:#F7F4EC; --ink-850:#FFFFFF; --ink-800:#FFFFFF; --ink-750:#F1ECE0;
-            --ink-border: rgba(20,20,15,0.10); --ink-border-strong: rgba(20,20,15,0.18);
-            --gold-600:#8C6C13; --gold-500:#A9871F; --gold-400:#C9A430; --gold-tint: rgba(169,135,31,0.14);
-            --text-hi:#20222A; --text-mid:#585B68; --text-low:#8A8D98;
-            --shadow-panel: 0 1px 2px rgba(20,15,5,0.06), 0 12px 28px rgba(20,15,5,0.08);
-            --shadow-pop: 0 20px 50px rgba(20,15,5,0.18);
-            --app-bg-1:#EDE8DC; --app-bg-2:#F7F4EC; --app-bg-3:#E7E1D2;
-            --panel-bg: rgba(255,255,255,0.75); --field-bg: rgba(20,15,5,0.035);
+            --ink-950:#E8E4D9; --ink-900:#F2EFEB; --ink-850:#FFFFFF; --ink-800:#FFFFFF; --ink-750:#EFEBE1;
+            --ink-border: rgba(0,0,0,0.08); --ink-border-strong: rgba(0,0,0,0.15);
+            --gold-600:#8C6C13; --gold-500:#A9871F; --gold-400:#C9A430; --gold-tint: rgba(169,135,31,0.12);
+            --text-hi:#1A1C23; --text-mid:#4A4D59; --text-low:#7A7D8A;
+            --shadow-panel: 0 2px 10px rgba(0,0,0,0.05); --shadow-pop: 0 15px 40px rgba(0,0,0,0.12);
+            --app-bg-1:#E8E4D9; --app-bg-2:#F2EFEB; --app-bg-3:#DFDBCF;
+            --panel-bg: rgba(255,255,255,0.9); --field-bg: rgba(0,0,0,0.04);
         }
 
-        *{ box-sizing:border-box; margin:0; padding:0; font-family:'Inter',system-ui,-apple-system,sans-serif; }
+        *{ box-sizing:border-box; margin:0; padding:0; font-family:'Inter',system-ui,sans-serif; }
         html,body{ height:100%; }
         body{
-            background: linear-gradient(160deg, var(--app-bg-1), var(--app-bg-2) 55%, var(--app-bg-3));
+            background: linear-gradient(145deg, var(--app-bg-1), var(--app-bg-2) 40%, var(--app-bg-3));
             color:var(--text-hi); height:100vh; display:flex; flex-direction:column; overflow:hidden;
-            -webkit-font-smoothing:antialiased; padding:10px; gap:10px; transition: color .35s ease;
+            -webkit-font-smoothing:antialiased; padding:8px; gap:8px; transition: color .3s ease;
         }
 
         ::-webkit-scrollbar{ width:6px; height:6px; }
         ::-webkit-scrollbar-track{ background:transparent; }
-        ::-webkit-scrollbar-thumb{ background:rgba(140,140,150,0.35); border-radius:10px; }
-        :focus-visible{ outline:2px solid var(--gold-400); outline-offset:2px; }
-        button{ font:inherit; }
+        ::-webkit-scrollbar-thumb{ background:rgba(140,140,150,0.3); border-radius:10px; }
+        :focus-visible{ outline:2px solid var(--gold-400); outline-offset:1px; }
 
         .glass{
             background:var(--panel-bg); backdrop-filter:var(--panel-blur); -webkit-backdrop-filter:var(--panel-blur);
             border:1px solid var(--ink-border); box-shadow:var(--shadow-panel); border-radius:var(--radius-lg);
-            transition: background .35s ease, border-color .35s ease;
         }
-        .icon{ width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round; display:block; flex-shrink:0; }
+        .icon{ width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; display:block; flex-shrink:0; }
         .icon-sm{ width:14px; height:14px; }
 
-        /* ---------- Header ---------- */
-        .app-header{ height:60px; padding:0 18px; display:flex; align-items:center; justify-content:space-between; z-index:30; gap:16px; flex-shrink: 0;}
+        /* ---------- En-tête ---------- */
+        .app-header{ height:56px; padding:0 16px; display:flex; align-items:center; justify-content:space-between; z-index:30; gap:12px; flex-shrink: 0;}
         .brand{ display:flex; align-items:center; gap:10px; user-select:none; flex-shrink:0; }
-        .brand-mark{ width:26px; height:26px; position:relative; flex-shrink:0; }
-        .brand-mark span{ position:absolute; inset:0; border-radius:5px; border:1.4px solid var(--gold-500); }
-        .brand-mark span:first-child{ top:4px; left:0; background:var(--ink-950); }
-        .brand-mark span:last-child{ top:0; left:4px; background:var(--ink-800); }
-        .brand-word{ font-size:1.05rem; letter-spacing:-0.2px; white-space:nowrap; }
+        .brand-mark{ width:24px; height:24px; position:relative; flex-shrink:0; }
+        .brand-mark span{ position:absolute; inset:0; border-radius:4px; border:1.4px solid var(--gold-500); }
+        .brand-mark span:first-child{ top:3px; left:0; background:var(--ink-950); }
+        .brand-mark span:last-child{ top:0; left:3px; background:var(--ink-800); }
+        .brand-word{ font-size:1rem; letter-spacing:-0.2px; white-space:nowrap; }
         .brand-word b{ font-weight:700; }
         .brand-word em{ font-style:normal; font-weight:700; font-family:'Playfair Display',serif; background:linear-gradient(120deg,var(--gold-400),var(--gold-600)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-left:2px; }
-        .doc-title-input{
-            background:var(--field-bg); border:1px solid transparent; color:inherit; padding:8px 14px; border-radius:var(--radius-sm); font-size:0.9rem; font-weight:500; width:280px; text-align:center; outline:none; transition:all .2s ease;
-        }
+        
+        .doc-title-input{ background:var(--field-bg); border:1px solid transparent; color:inherit; padding:6px 12px; border-radius:var(--radius-sm); font-size:0.85rem; font-weight:500; width:260px; text-align:center; outline:none; transition:all .2s ease; }
         .doc-title-input:focus{ border-color:var(--ink-border-strong); background:rgba(255,255,255,0.07); }
-        .header-actions{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
-
+        
+        .header-actions{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
         .theme-swatches{ display:flex; gap:6px; padding:3px; border:1px solid var(--ink-border); border-radius:999px; }
-        .theme-swatch{ width:24px; height:24px; border-radius:50%; border:2px solid transparent; cursor:pointer; padding:0; }
+        .theme-swatch{ width:22px; height:22px; border-radius:50%; border:2px solid transparent; cursor:pointer; padding:0; }
         .theme-swatch.nuit{ background: linear-gradient(135deg,#12151C,#232936); }
         .theme-swatch.papier{ background: linear-gradient(135deg,#FFFFFF,#EDE8DC); }
         .theme-swatch.active{ border-color:var(--gold-500); }
 
-        /* ---------- Buttons ---------- */
-        .btn{
-            display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:9px 14px; border-radius:var(--radius-sm); font-size:0.82rem; font-weight:600; cursor:pointer; border:1px solid var(--ink-border); color:var(--text-hi); background:var(--field-bg); white-space:nowrap; transition:all .15s ease; user-select:none;
-        }
+        /* ---------- Boutons ---------- */
+        .btn{ display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:7px 12px; border-radius:var(--radius-sm); font-size:0.75rem; font-weight:600; cursor:pointer; border:1px solid var(--ink-border); color:var(--text-hi); background:var(--field-bg); white-space:nowrap; transition:all .15s ease; user-select:none; }
         .btn:hover{ background:rgba(255,255,255,0.08); border-color:var(--ink-border-strong); }
-        body.theme-papier .btn:hover{ background:rgba(20,15,5,0.06); }
+        body.theme-papier .btn:hover{ background:rgba(0,0,0,0.05); }
         .btn:active{ transform:translateY(1px); }
-        .btn-icon{ padding:9px; width:36px; height:36px; }
-        .btn-primary{ background:linear-gradient(135deg,var(--gold-400),var(--gold-600)); border:none; color:#191203; box-shadow:0 6px 18px rgba(201,164,48,0.35); }
-        .btn-primary:hover{ filter:brightness(1.08); }
+        .btn-icon{ padding:7px; width:32px; height:32px; }
+        .btn-primary{ background:linear-gradient(135deg,var(--gold-400),var(--gold-600)); border:none; color:#191203; box-shadow:0 4px 12px rgba(201,164,48,0.3); }
+        .btn-primary:hover{ filter:brightness(1.1); box-shadow:0 6px 16px rgba(201,164,48,0.4); }
         .btn-ghost-danger{ color:var(--text-mid); }
         .btn-ghost-danger:hover{ color:var(--danger); background:var(--danger-tint); border-color:transparent; }
-        .btn[disabled], .btn.disabled{ opacity:0.32; pointer-events:none; }
         .btn.active{ color:var(--gold-400); border-color:var(--gold-500); background:var(--gold-tint); }
 
-        [data-tip]{ position:relative; }
-        [data-tip]::after{
-            content:attr(data-tip); position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%) translateY(2px); background:var(--ink-950); color:var(--text-hi); font-size:11px; font-weight:500; padding:5px 9px; border-radius:6px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .15s ease, transform .15s ease; z-index:60; border:1px solid var(--ink-border-strong);
-        }
-        [data-tip]:hover::after{ opacity:1; transform:translateX(-50%) translateY(0); }
-
-        /* ---------- Inputs ---------- */
-        .field{ height:36px; border:1px solid var(--ink-border); border-radius:var(--radius-sm); padding:0 10px; font-size:0.82rem; background:var(--field-bg); color:inherit; outline:none; }
-        select.field option{ background-color:#1b2029; color:#F2F1ED; }
-        .field-num{ width:58px; text-align:center; }
-        .field-color{ width:36px; height:36px; padding:2px; border:1px solid var(--ink-border); border-radius:var(--radius-sm); background:var(--field-bg); cursor:pointer; }
+        /* ---------- Formulaires & Inputs ---------- */
+        .field{ height:32px; border:1px solid var(--ink-border); border-radius:var(--radius-sm); padding:0 8px; font-size:0.75rem; background:var(--field-bg); color:inherit; outline:none; }
+        select.field option{ background-color:var(--ink-900); color:var(--text-hi); }
+        .field-num{ width:50px; text-align:center; }
+        .field-color{ width:32px; height:32px; padding:1px; border:1px solid var(--ink-border); border-radius:var(--radius-sm); background:var(--field-bg); cursor:pointer; }
         .field-color::-webkit-color-swatch-wrapper{ padding:2px; }
-        .field-color::-webkit-color-swatch{ border-radius:5px; border:none; }
+        .field-color::-webkit-color-swatch{ border-radius:3px; border:none; }
 
-        /* ---------- Workspace ---------- */
-        .workspace{ display:flex; flex:1; gap:10px; overflow:hidden; }
-        .slides-sidebar{ width:206px; display:flex; flex-direction:column; padding:14px; gap:12px; overflow-y:auto; flex-shrink:0; }
-        .slide-thumbnail{ width:100%; aspect-ratio:16/9; border-radius:var(--radius-md); cursor:grab; position:relative; overflow:hidden; border:2px solid transparent; transition:border-color .2s ease, transform .2s ease; flex-shrink:0; }
-        .slide-thumbnail:hover{ transform:translateY(-1px); }
-        .slide-thumbnail.active{ border-color:var(--gold-500); }
+        /* ---------- Espace de travail ---------- */
+        .workspace{ display:flex; flex:1; gap:8px; overflow:hidden; }
+        
+        /* Barre latérale gauche (Diapositives) */
+        .slides-sidebar{ width:180px; display:flex; flex-direction:column; padding:12px; gap:10px; overflow-y:auto; flex-shrink:0; }
+        .slide-thumbnail{ width:100%; aspect-ratio:16/9; border-radius:var(--radius-md); cursor:grab; position:relative; overflow:hidden; border:2px solid transparent; transition:transform .2s ease; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+        .slide-thumbnail:hover{ transform:translateY(-2px); border-color:var(--ink-border-strong); }
+        .slide-thumbnail.active{ border-color:var(--gold-500); box-shadow:0 0 0 2px rgba(201,164,48,0.3); }
         .slide-thumbnail.drag-over{ border-color:var(--text-mid); border-style:dashed; }
-        .slide-thumbnail::after{ content:''; position:absolute; top:0; right:0; width:0; height:0; border-style:solid; border-width:0 14px 14px 0; border-color:transparent var(--gold-500) transparent transparent; opacity:0.85; }
         .thumb-scaler{ position:absolute; top:0; left:0; width:960px; height:540px; transform-origin:top left; pointer-events:none; }
-        .slide-number{ position:absolute; bottom:6px; left:6px; background:rgba(0,0,0,0.55); color:#fff; font-size:0.68rem; font-weight:600; padding:2px 7px; border-radius:5px; }
-        .thumb-delete{ position:absolute; bottom:6px; right:6px; width:22px; height:22px; border-radius:6px; border:none; background:rgba(0,0,0,0.55); color:#fff; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .15s ease; cursor:pointer; }
+        .slide-number{ position:absolute; bottom:4px; left:4px; background:rgba(0,0,0,0.6); color:#fff; font-size:0.6rem; font-weight:600; padding:2px 6px; border-radius:4px; }
+        .thumb-delete{ position:absolute; bottom:4px; right:4px; width:20px; height:20px; border-radius:4px; border:none; background:rgba(0,0,0,0.6); color:#fff; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .15s ease; cursor:pointer; }
         .slide-thumbnail:hover .thumb-delete{ opacity:1; }
         .thumb-delete:hover{ background:var(--danger); }
-        .thumb-add{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; aspect-ratio:16/9; width:100%; border:1.5px dashed var(--ink-border-strong); border-radius:var(--radius-md); background:transparent; color:var(--text-mid); cursor:pointer; font-size:0.72rem; font-weight:600; flex-shrink:0; }
-        .thumb-add:hover{ color:var(--gold-400); border-color:var(--gold-500); }
+        .thumb-add{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; aspect-ratio:16/9; width:100%; border:1.5px dashed var(--ink-border-strong); border-radius:var(--radius-md); background:transparent; color:var(--text-mid); cursor:pointer; font-size:0.7rem; font-weight:600; flex-shrink:0; transition:all .2s; }
+        .thumb-add:hover{ color:var(--gold-400); border-color:var(--gold-500); background:var(--gold-tint); }
 
-        .stage-container{ flex:1; display:flex; align-items:center; justify-content:center; padding:26px; position:relative; overflow:hidden; }
+        /* Scène principale */
+        .stage-container{ flex:1; display:flex; align-items:center; justify-content:center; padding:20px; position:relative; overflow:hidden; }
         .canvas-scaler{ width:960px; height:540px; transform-origin:center center; flex-shrink:0; position: relative; }
         .slide-canvas{ width:960px; height:540px; border-radius:var(--radius-md); box-shadow:var(--shadow-pop); position:relative; overflow:hidden; background-size:cover; background-position:center; }
         
-        .guide-line{ position:absolute; background:var(--gold-400); z-index:500; opacity:0; pointer-events:none; box-shadow:0 0 6px rgba(227,190,85,0.7); }
+        .guide-line{ position:absolute; background:var(--gold-400); z-index:500; opacity:0; pointer-events:none; box-shadow:0 0 4px rgba(227,190,85,0.6); }
         .guide-line.v{ top:0; width:1px; height:540px; }
         .guide-line.h{ left:0; height:1px; width:960px; }
-        .guide-line.show{ opacity:0.9; }
+        .guide-line.show{ opacity:0.8; }
 
-        .canvas-element{ position:absolute; cursor:grab; user-select:none; border-radius:4px; }
-        .canvas-element.selected{ box-shadow:0 0 0 2px var(--gold-500); z-index: 100; }
-        .canvas-element[contenteditable="true"]{ cursor:text; box-shadow:0 0 0 2px var(--gold-400); }
+        .canvas-element{ position:absolute; cursor:grab; user-select:none; }
+        .canvas-element.selected{ box-shadow:0 0 0 2px var(--gold-500); z-index: 100; border-radius:4px; }
+        .canvas-element[contenteditable="true"]{ cursor:text; box-shadow:0 0 0 2px var(--gold-400); outline:none; }
         .canvas-element img{ width:100%; height:100%; object-fit:cover; pointer-events:none; border-radius:4px; }
         .canvas-element iframe, .canvas-element video{ width:100%; height:100%; border:none; pointer-events:auto; border-radius:4px; }
-        
-        .page-number-badge{ position:absolute; bottom:14px; right:18px; font-size:13px; color:rgba(120,120,120,0.7); font-family:'Inter',sans-serif; }
-        
-        .resize-handle{ position:absolute; width:11px; height:11px; background:var(--gold-500); border:2px solid #14161c; border-radius:3px; z-index:20; }
-        .resize-handle.nw{ top:-6px; left:-6px; cursor:nwse-resize; }
-        .resize-handle.ne{ top:-6px; right:-6px; cursor:nesw-resize; }
-        .resize-handle.sw{ bottom:-6px; left:-6px; cursor:nesw-resize; }
-        .resize-handle.se{ bottom:-6px; right:-6px; cursor:nwse-resize; }
-        .resize-handle.e{ top:50%; right:-6px; margin-top:-6px; cursor:ew-resize; }
+        .canvas-element svg { display:block; width:100%; height:100%; overflow:visible; }
 
-        /* ---------- Inspector (Barre de droite) ---------- */
-        .inspector-sidebar{ width:320px; display:flex; flex-direction:column; gap:0; overflow-y:auto; flex-shrink:0; border-left:1px solid var(--ink-border); }
-        .inspector-section{ padding:16px; border-bottom:1px solid var(--ink-border); display:flex; flex-direction:column; gap:12px; }
-        .panel-title{ font-size:0.85rem; font-weight:700; display:flex; align-items:center; gap:8px; color:var(--text-hi); text-transform:uppercase; letter-spacing:0.5px;}
-        
-        /* Grille d'outils d'ajout (Outils globaux) */
-        .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .tools-grid .btn { flex-direction: column; padding: 10px 4px; font-size: 0.7rem; gap: 4px; height: auto; }
-        
-        .form-field{ display:flex; flex-direction:column; gap:6px; }
-        .form-field label{ font-size:0.68rem; font-weight:700; color:var(--text-low); text-transform:uppercase; letter-spacing:0.6px; }
-        .form-field textarea{ resize:vertical; min-height:70px; font-size:0.85rem; line-height:1.4; padding:9px 10px; }
-        .row-2{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-        .icon-row{ display:flex; gap:8px; }
-        .small-note{ font-size:0.72rem; color:var(--text-low); }
+        .resize-handle{ position:absolute; width:10px; height:10px; background:var(--gold-500); border:1.5px solid var(--ink-850); border-radius:50%; z-index:20; }
+        .resize-handle.nw{ top:-5px; left:-5px; cursor:nwse-resize; }
+        .resize-handle.ne{ top:-5px; right:-5px; cursor:nesw-resize; }
+        .resize-handle.sw{ bottom:-5px; left:-5px; cursor:nesw-resize; }
+        .resize-handle.se{ bottom:-5px; right:-5px; cursor:nwse-resize; }
+        .resize-handle.e{ top:50%; right:-5px; transform:translateY(-50%); cursor:ew-resize; }
 
-        /* ---------- Toast ---------- */
-        #toast-stack{ position:fixed; bottom:24px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; gap:8px; z-index:10050; align-items:center; }
-        .toast{ padding:11px 18px; border-radius:999px; font-size:0.82rem; font-weight:500; color:var(--text-hi); background:var(--ink-900); border:1px solid var(--ink-border-strong); box-shadow:var(--shadow-panel); opacity:0; transform:translateY(10px); transition:all .25s ease; }
+        /* Menu contextuel flottant DANS LA DIAPOSITIVE */
+        .floating-context-menu {
+            position: absolute; display: flex; align-items: center; gap: 6px; padding: 6px 10px;
+            border-radius: var(--radius-sm); pointer-events: auto; z-index: 1000;
+            box-shadow: var(--shadow-panel); background: var(--panel-bg); border: 1px solid var(--ink-border);
+            backdrop-filter: var(--panel-blur); transform: translateY(-110%);
+        }
+
+        /* ---------- Inspecteur Droit (Outils & Propriétés) ---------- */
+        .inspector-sidebar{ width:300px; display:flex; flex-direction:column; overflow-y:auto; flex-shrink:0; }
+        .inspector-section{ padding:14px; border-bottom:1px solid var(--ink-border); display:flex; flex-direction:column; gap:10px; }
+        .panel-title{ font-size:0.75rem; font-weight:700; display:flex; align-items:center; gap:6px; color:var(--text-hi); text-transform:uppercase; letter-spacing:0.8px;}
+        
+        .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .tools-grid .btn { flex-direction: column; padding: 10px 4px; font-size: 0.65rem; gap: 6px; height: auto; }
+        .tools-grid .btn .icon { width:18px; height:18px; }
+        
+        .form-field{ display:flex; flex-direction:column; gap:4px; }
+        .form-field label{ font-size:0.65rem; font-weight:600; color:var(--text-low); text-transform:uppercase; letter-spacing:0.5px; }
+        .form-field textarea{ resize:vertical; min-height:60px; font-size:0.75rem; line-height:1.4; padding:8px; }
+        .row-2{ display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+        .icon-row{ display:flex; gap:4px; }
+        .small-note{ font-size:0.65rem; color:var(--text-low); line-height: 1.4; }
+
+        /* ---------- Toasts & Modales ---------- */
+        #toast-stack{ position:fixed; bottom:20px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; gap:6px; z-index:10050; align-items:center; pointer-events:none; }
+        .toast{ padding:10px 16px; border-radius:999px; font-size:0.75rem; font-weight:600; color:var(--text-hi); background:var(--ink-850); border:1px solid var(--ink-border-strong); box-shadow:var(--shadow-panel); opacity:0; transform:translateY(10px); transition:all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .toast.show{ opacity:1; transform:translateY(0); }
-        .toast.error{ border-color:rgba(229,98,106,0.5); }
-        .toast.success{ border-color:rgba(45, 255, 125, 0.5); }
+        .toast.error{ border-left:3px solid var(--danger); }
+        .toast.success{ border-left:3px solid #2dff7d; }
 
-        /* ---------- Modal ---------- */
-        #modal-root{ position:fixed; inset:0; z-index:9000; display:none; align-items:center; justify-content:center; background:rgba(6,7,10,0.55); backdrop-filter:blur(3px); }
+        #modal-root{ position:fixed; inset:0; z-index:9000; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); }
         #modal-root.show{ display:flex; }
-        .modal-box{ width:380px; max-width:92vw; border-radius:var(--radius-lg); padding:22px; display:flex; flex-direction:column; gap:14px; background:var(--ink-850); border:1px solid var(--ink-border-strong); box-shadow:var(--shadow-pop); }
-        .modal-title{ font-size:1rem; font-weight:700; }
-        .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:4px; }
-        .file-drop{ border:1.5px dashed var(--ink-border-strong); border-radius:var(--radius-sm); padding:10px; font-size:0.78rem; color:var(--text-mid); text-align:center; cursor:pointer; }
-        .file-drop:hover{ border-color:var(--gold-500); color:var(--gold-400); }
-        .or-sep{ display:flex; align-items:center; gap:8px; color:var(--text-low); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.6px; }
-        .or-sep::before, .or-sep::after{ content:''; flex:1; height:1px; background:var(--ink-border); }
+        .modal-box{ width:360px; border-radius:var(--radius-lg); padding:20px; display:flex; flex-direction:column; gap:12px; background:var(--ink-850); border:1px solid var(--ink-border-strong); box-shadow:var(--shadow-pop); }
+        .modal-title{ font-size:0.95rem; font-weight:700; }
+        .modal-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:6px; }
+        .file-drop{ border:1.5px dashed var(--ink-border-strong); border-radius:var(--radius-sm); padding:12px; font-size:0.75rem; color:var(--text-mid); text-align:center; cursor:pointer; transition:all .2s; }
+        .file-drop:hover{ border-color:var(--gold-500); color:var(--gold-400); background:var(--gold-tint); }
 
         /* ---------- Animations & Transitions ---------- */
         .trans-fade-enter{ animation:fadeIn .7s ease forwards; }
-        .trans-blur-enter{ animation:blurScaleIn .7s cubic-bezier(.16,1,.3,1) forwards; }
+        .trans-blur-enter{ animation:blurScaleIn .8s cubic-bezier(.16,1,.3,1) forwards; }
         .trans-3d-flip-enter{ animation:flipIn3D .9s cubic-bezier(.16,1,.3,1) forwards; perspective:1500px; transform-style:preserve-3d; }
         .trans-slide-enter{ animation:slideIn .7s cubic-bezier(.16,1,.3,1) forwards; }
         .trans-zoom-enter{ animation:zoomInFull .7s cubic-bezier(.16,1,.3,1) forwards; }
         .trans-bounce-enter{ animation:bounceIn .8s cubic-bezier(.175, .885, .32, 1.275) forwards; }
-        .trans-slide-up-enter{ animation:slideUpFull .7s cubic-bezier(.16,1,.3,1) forwards; }
+        .trans-fold-enter{ animation:foldIn .8s cubic-bezier(.16,1,.3,1) forwards; transform-origin: top; }
 
         @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
-        @keyframes blurScaleIn{ from{transform:scale(1.04); filter:blur(16px); opacity:0;} to{transform:scale(1); filter:blur(0); opacity:1;} }
-        @keyframes flipIn3D{ from{transform:rotateY(-85deg); opacity:0;} to{transform:rotateY(0deg); opacity:1;} }
+        @keyframes blurScaleIn{ from{transform:scale(1.05); filter:blur(20px); opacity:0;} to{transform:scale(1); filter:blur(0); opacity:1;} }
+        @keyframes flipIn3D{ from{transform:rotateY(-90deg); opacity:0;} to{transform:rotateY(0deg); opacity:1;} }
         @keyframes slideIn{ from{transform:translateX(100%); opacity:0;} to{transform:translateX(0); opacity:1;} }
-        @keyframes zoomInFull{ from{transform:scale(0.8); opacity:0;} to{transform:scale(1); opacity:1;} }
-        @keyframes bounceIn{ 0%{transform:scale(0.3); opacity:0;} 50%{transform:scale(1.05); opacity:1;} 70%{transform:scale(0.9);} 100%{transform:scale(1); opacity:1;} }
-        @keyframes slideUpFull{ from{transform:translateY(100%); opacity:0;} to{transform:translateY(0); opacity:1;} }
+        @keyframes zoomInFull{ from{transform:scale(0.7); opacity:0;} to{transform:scale(1); opacity:1;} }
+        @keyframes bounceIn{ 0%{transform:scale(0.3); opacity:0;} 50%{transform:scale(1.03); opacity:1;} 70%{transform:scale(0.97);} 100%{transform:scale(1); opacity:1;} }
+        @keyframes foldIn{ 0%{transform:rotateX(-90deg); opacity:0;} 100%{transform:rotateX(0deg); opacity:1;} }
 
         /* Element animations */
         .anim-fade{ animation:fadeIn .8s ease forwards; }
         .anim-slide-up{ animation:slideUp .7s cubic-bezier(.16,1,.3,1) forwards; }
-        .anim-pop{ animation:popIn .55s cubic-bezier(.175,.885,.32,1.275) forwards; }
+        .anim-pop{ animation:popIn .6s cubic-bezier(.175,.885,.32,1.275) forwards; }
         .anim-slide-left{ animation:slideLeft .7s cubic-bezier(.16,1,.3,1) forwards; }
         .anim-slide-right{ animation:slideRight .7s cubic-bezier(.16,1,.3,1) forwards; }
         
-        @keyframes slideUp{ from{transform:translateY(40px); opacity:0;} to{transform:translateY(0); opacity:1;} }
-        @keyframes slideLeft{ from{transform:translateX(-40px); opacity:0;} to{transform:translateX(0); opacity:1;} }
-        @keyframes slideRight{ from{transform:translateX(40px); opacity:0;} to{transform:translateX(0); opacity:1;} }
-        @keyframes popIn{ from{transform:scale(.55); opacity:0;} to{transform:scale(1); opacity:1;} }
+        @keyframes slideUp{ from{transform:translateY(50px); opacity:0;} to{transform:translateY(0); opacity:1;} }
+        @keyframes slideLeft{ from{transform:translateX(-50px); opacity:0;} to{transform:translateX(0); opacity:1;} }
+        @keyframes slideRight{ from{transform:translateX(50px); opacity:0;} to{transform:translateX(0); opacity:1;} }
+        @keyframes popIn{ from{transform:scale(.5); opacity:0;} to{transform:scale(1); opacity:1;} }
 
-        /* ---------- Presentation ---------- */
+        /* ---------- Mode Présentation ---------- */
         #presentation-overlay{ display:none; position:fixed; inset:0; background:#000; z-index:9999; align-items:center; justify-content:center; }
         #presentation-overlay.active{ display:flex; }
         .present-slide{ width:100vw; height:56.25vw; max-height:100vh; max-width:177.78vh; position:relative; overflow:hidden; background-size:cover; background-position:center; }
         
-        /* Laser & Drawing Overlay */
+        /* Laser & Dessin */
         #presentation-draw-canvas { position: absolute; inset: 0; z-index: 10000; pointer-events: none; }
         #laser-pointer{
-            display:none; position:fixed; width:13px; height:13px; background:#ff2d4d;
+            display:none; position:fixed; width:12px; height:12px; background:#ff2d4d;
             border-radius:50%; pointer-events:none; z-index:10001;
-            box-shadow:0 0 16px 6px rgba(255,45,77,0.55); transform:translate(-50%,-50%);
+            box-shadow:0 0 16px 6px rgba(255,45,77,0.6); transform:translate(-50%,-50%);
+            transition: width 0.1s, height 0.1s;
         }
         #laser-pointer.active{ display:block; }
-        #laser-pointer.clicking{ width:9px; height:9px; box-shadow:0 0 20px 8px rgba(255,255,255,0.8) !important; }
+        #laser-pointer.clicking{ width:8px; height:8px; box-shadow:0 0 20px 8px rgba(255,255,255,0.8) !important; background:#fff !important; }
 
         .present-controls{
-            position:absolute; bottom:26px; left:50%; transform:translateX(-50%); background:rgba(10,10,14,0.6);
-            backdrop-filter:blur(14px); padding:9px 16px; border-radius:999px; border:1px solid rgba(255,255,255,0.1);
-            display:flex; gap:14px; align-items:center; z-index:10002; opacity:0; transition:opacity .3s ease;
+            position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(10,12,16,0.7);
+            backdrop-filter:blur(16px); padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,0.1);
+            display:flex; gap:12px; align-items:center; z-index:10002; opacity:0; transition:opacity .3s ease;
         }
-        .present-controls button{ background:rgba(255,255,255,0.08); border:none; color:#fff; width:32px; height:32px; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-        .present-controls button:hover{ background:rgba(255,255,255,0.18); }
-        .present-controls .badge{ font-size:0.78rem; color:#c9cdd6; padding:0 4px; font-variant-numeric:tabular-nums; }
-        .present-controls .divider{ width:1px; height:18px; background:rgba(255,255,255,0.15); }
+        .present-controls button{ background:rgba(255,255,255,0.06); border:none; color:#fff; width:30px; height:30px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+        .present-controls button:hover{ background:rgba(255,255,255,0.15); }
+        .present-controls .badge{ font-size:0.75rem; color:#c9cdd6; padding:0 4px; font-variant-numeric:tabular-nums; font-weight:600; }
+        .present-controls .divider{ width:1px; height:16px; background:rgba(255,255,255,0.2); }
+        .color-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 4px; border: 1px solid rgba(255,255,255,0.3); }
     </style>
 </head>
 <body>
@@ -242,92 +240,130 @@
     <header class="app-header glass">
         <div class="brand">
             <div class="brand-mark"><span></span><span></span></div>
-            <div class="brand-word"><b>The Pages.</b><em>Presentar</em></div>
+            <div class="brand-word"><b>The Pages.</b><em>Presentar</em> <span style="font-size:0.6rem; color:var(--gold-400); vertical-align:top;">PRO</span></div>
         </div>
-        <input type="text" id="presentation-title" class="doc-title-input" value="Formation & Présentations Professionnelles" oninput="presentation.title=this.value; saveToDB();">
+        <input type="text" id="presentation-title" class="doc-title-input" value="Stratégie & Données 2026" oninput="presentation.title=this.value; saveToDB();">
         <div class="header-actions">
             <div class="theme-swatches">
                 <button class="theme-swatch nuit active" data-theme="nuit" title="Thème Nuit" onclick="setTheme('nuit')"></button>
                 <button class="theme-swatch papier" data-theme="papier" title="Thème Papier" onclick="setTheme('papier')"></button>
             </div>
-            <button class="btn btn-icon" id="btn-page-numbers" data-tip="Numéros de page" onclick="togglePageNumbers()"></button>
-            <button class="btn btn-icon" data-tip="Exporter (.pages.data)" onclick="exportPagesData()"></button>
-            <button class="btn btn-icon" data-tip="Exporter (.pptx PowerPoint)" onclick="exportPPT()"></button>
-            <button class="btn btn-icon" data-tip="Importer" onclick="document.getElementById('import-input').click()"></button>
+            <button class="btn btn-icon" data-tip="Créer: Exporter JSON (.pages.data)" onclick="exportPagesData()"></button>
+            <button class="btn btn-icon" data-tip="Créer: Exporter PowerPoint (.pptx)" onclick="exportPPT()"></button>
+            <button class="btn btn-icon" data-tip="Importer un projet" onclick="document.getElementById('import-input').click()"></button>
             <input type="file" id="import-input" accept=".json,.data" style="display:none" onchange="importProjectFile(this.files[0])">
             <button class="btn btn-primary" onclick="startPresentation()"></button>
         </div>
     </header>
 
     <div class="workspace">
+        <!-- Barre de gauche : Miniatures -->
         <div class="slides-sidebar glass" id="slides-container"></div>
         
+        <!-- Scène principale -->
         <div class="stage-container" onclick="deselectAll(event)">
             <div class="canvas-scaler" id="canvas-scaler">
                 <div class="slide-canvas" id="main-canvas">
                     <div class="guide-line v" id="guide-v"></div>
                     <div class="guide-line h" id="guide-h"></div>
+                    <!-- Le floating menu sera injecté ici en JS -->
                 </div>
             </div>
         </div>
 
+        <!-- Inspecteur droit : Tous les outils et propriétés -->
         <div class="inspector-sidebar glass">
+            
+            <!-- Section 1 : Ajout d'éléments (Outils Globaux) -->
             <div class="inspector-section">
-                <h3 class="panel-title">Création</h3>
+                <h3 class="panel-title">Insérer</h3>
                 <div class="tools-grid">
                     <button class="btn" onclick="addTextElement()" id="btn-add-text"></button>
                     <button class="btn" onclick="promptAddImage()" id="btn-add-image"></button>
                     <button class="btn" onclick="promptAddVideo()" id="btn-add-video"></button>
-                    <button class="btn" onclick="addShapeElement('rect')" id="btn-add-shape"></button>
-                    <button class="btn" onclick="addChartElement('bar')" id="btn-add-chart"></button>
+                    
+                    <!-- Menu Shapes -->
+                    <div style="position:relative; display:flex; flex-direction:column;">
+                        <button class="btn" style="width:100%;" id="btn-add-shape" onclick="document.getElementById('shape-menu').style.display=document.getElementById('shape-menu').style.display==='grid'?'none':'grid'"></button>
+                        <div id="shape-menu" style="display:none; position:absolute; top:100%; left:0; width:200px; background:var(--ink-850); border:1px solid var(--ink-border); padding:6px; border-radius:var(--radius-sm); z-index:100; grid-template-columns:1fr 1fr; gap:4px; box-shadow:var(--shadow-panel);">
+                            <button class="btn" onclick="addShapeElement('rect'); this.parentNode.style.display='none'">Rectangle</button>
+                            <button class="btn" onclick="addShapeElement('ellipse'); this.parentNode.style.display='none'">Ellipse</button>
+                            <button class="btn" onclick="addShapeElement('triangle'); this.parentNode.style.display='none'">Triangle</button>
+                            <button class="btn" onclick="addShapeElement('star'); this.parentNode.style.display='none'">Étoile</button>
+                            <button class="btn" onclick="addShapeElement('hexagon'); this.parentNode.style.display='none'">Hexagone</button>
+                            <button class="btn" onclick="addShapeElement('arrow'); this.parentNode.style.display='none'">Flèche</button>
+                            <button class="btn" onclick="addShapeElement('line'); this.parentNode.style.display='none'">Ligne</button>
+                        </div>
+                    </div>
+
+                    <!-- Menu Charts -->
+                    <div style="position:relative; display:flex; flex-direction:column;">
+                        <button class="btn" style="width:100%;" id="btn-add-chart" onclick="document.getElementById('chart-menu').style.display=document.getElementById('chart-menu').style.display==='grid'?'none':'grid'"></button>
+                        <div id="chart-menu" style="display:none; position:absolute; top:100%; right:0; width:220px; background:var(--ink-850); border:1px solid var(--ink-border); padding:6px; border-radius:var(--radius-sm); z-index:100; grid-template-columns:1fr; gap:4px; box-shadow:var(--shadow-panel);">
+                            <button class="btn" onclick="addChartElement('modern-area'); this.parentNode.style.display='none'">Graphique Aires (Moderne)</button>
+                            <button class="btn" onclick="addChartElement('modern-line'); this.parentNode.style.display='none'">Lignes & Points (Data)</button>
+                            <button class="btn" onclick="addChartElement('modern-bar'); this.parentNode.style.display='none'">Barres Comparatives</button>
+                            <button class="btn" onclick="addChartElement('modern-donut'); this.parentNode.style.display='none'">Donut Multi-niveaux</button>
+                        </div>
+                    </div>
+                    
                     <button class="btn" onclick="addNewSlide()" id="btn-add-slide"></button>
                 </div>
                 
-                <div class="row-2" style="margin-top:8px;">
+                <div class="row-2" style="margin-top:6px;">
                     <div class="form-field">
-                        <label>Fond</label>
+                        <label>Fond Diapo</label>
                         <input type="color" id="bg-color-input" class="field-color" value="#ffffff" onchange="updateSlideBackgroundColor(this.value)">
                     </div>
                     <div class="form-field">
                         <label>Transition Diapo</label>
                         <select id="slide-transition-select" class="field" onchange="updateSlideTransition(this.value)">
-                            <option value="trans-blur-enter">Flou</option>
-                            <option value="trans-fade-enter">Fondu</option>
-                            <option value="trans-3d-flip-enter">3D Flip</option>
-                            <option value="trans-slide-enter">Glissement</option>
-                            <option value="trans-zoom-enter">Zoom</option>
-                            <option value="trans-bounce-enter">Rebond</option>
-                            <option value="trans-slide-up-enter">Vers le haut</option>
+                            <option value="trans-blur-enter">Flou HD</option>
+                            <option value="trans-fade-enter">Fondu Doux</option>
+                            <option value="trans-3d-flip-enter">Rotation 3D</option>
+                            <option value="trans-slide-enter">Glissement Latéral</option>
+                            <option value="trans-zoom-enter">Zoom Éclat</option>
+                            <option value="trans-bounce-enter">Rebond Dynamique</option>
+                            <option value="trans-fold-enter">Dépliage (Fold)</option>
                         </select>
                     </div>
                 </div>
             </div>
 
+            <!-- Section 2 : Propriétés de l'élément sélectionné -->
             <div class="inspector-section" style="flex:1;">
-                <h3 class="panel-title" id="inspector-title">Propriétés</h3>
+                <h3 class="panel-title" id="inspector-title">Configuration</h3>
                 <div id="inspector-content"></div>
             </div>
         </div>
     </div>
 
+    <!-- Mode Présentation -->
     <div id="presentation-overlay">
         <canvas id="presentation-draw-canvas"></canvas>
         <div id="laser-pointer"></div>
         <div class="present-slide" id="presentation-stage"></div>
         <div class="present-controls">
-            <button onclick="prevPresentSlide()" id="present-prev"></button>
+            <button onclick="prevPresentSlide()" id="present-prev" title="Précédent"></button>
             <span class="badge" id="present-slide-counter">1 / 1</span>
-            <button onclick="nextPresentSlide()" id="present-next"></button>
+            <button onclick="nextPresentSlide()" id="present-next" title="Suivant"></button>
             <div class="divider"></div>
             <span class="badge" id="present-timer">00:00</span>
             <div class="divider"></div>
-            <button onclick="exitPresentation()" id="present-exit" style="color:#ff6b74;"></button>
+            <div style="display:flex; flex-direction:column; gap:2px; margin:0 4px;">
+                <span style="font-size:0.55rem; color:#888;">LASER</span>
+                <div style="display:flex; gap:2px;">
+                    <span class="color-dot" style="background:#ff2d4d;" title="Touche R"></span>
+                    <span class="color-dot" style="background:#2dff7d;" title="Touche G"></span>
+                    <span class="color-dot" style="background:#2d89ff;" title="Touche B"></span>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <button onclick="exitPresentation()" id="present-exit" style="color:#ff6b74;" title="Quitter (Echap)"></button>
         </div>
     </div>
 
-    <div id="modal-root">
-        <div class="modal-box" id="modal-box"></div>
-    </div>
+    <div id="modal-root"><div class="modal-box" id="modal-box"></div></div>
     <div id="toast-stack"></div>
 
 <script>
@@ -343,12 +379,10 @@ const ICON_PATHS = {
     video: '<rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="7" y1="4" x2="7" y2="20"></line><line x1="17" y1="4" x2="17" y2="20"></line><line x1="2" y1="9" x2="7" y2="9"></line><line x1="2" y1="15" x2="7" y2="15"></line>',
     chart: '<rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M7 17V13"></path><path d="M12 17V9"></path><path d="M17 17V5"></path>',
     type: '<polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line>',
-    shape: '<rect x="3" y="3" width="8" height="8" rx="1.5"></rect><circle cx="17" cy="17" r="4"></circle>',
+    shape: '<polygon points="12 2 2 22 22 22"></polygon>',
     alignLeft: '<line x1="3" y1="5" x2="21" y2="5"></line><line x1="3" y1="10" x2="15" y2="10"></line><line x1="3" y1="15" x2="21" y2="15"></line>',
     alignCenter: '<line x1="3" y1="5" x2="21" y2="5"></line><line x1="7" y1="10" x2="17" y2="10"></line><line x1="3" y1="15" x2="21" y2="15"></line>',
     alignRight: '<line x1="3" y1="5" x2="21" y2="5"></line><line x1="9" y1="10" x2="21" y2="10"></line><line x1="3" y1="15" x2="21" y2="15"></line>',
-    alignHCenter: '<line x1="12" y1="2" x2="12" y2="22"></line><rect x="6" y="7" width="12" height="4" rx="1"></rect>',
-    alignVCenter: '<line x1="2" y1="12" x2="22" y2="12"></line><rect x="7" y="6" width="4" height="12" rx="1"></rect>',
     front: '<rect x="7" y="7" width="11" height="11" rx="2"></rect><rect x="3" y="3" width="11" height="11" rx="2" opacity="0.35"></rect>',
     back: '<rect x="3" y="3" width="11" height="11" rx="2" opacity="0.35"></rect><rect x="10" y="10" width="11" height="11" rx="2"></rect>',
     hash: '<line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line>',
@@ -359,31 +393,29 @@ const ICON_PATHS = {
     close: '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>',
     ppt: '<rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><path d="M8 8h3v8H8z"></path><path d="M11 8h2a3 3 0 0 1 0 6h-2"></path>'
 };
-
 function icon(name, cls){ return '<svg class="icon ' + (cls||'') + '" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">' + ICON_PATHS[name] + '</svg>'; }
 
-// Polices étendues
+// Polices (sauvegardées et appliquées)
 const FONTS = [
-    { name:"Inter", val:"'Inter', sans-serif" }, { name:"Poppins", val:"'Poppins', sans-serif" },
-    { name:"Montserrat", val:"'Montserrat', sans-serif" }, { name:"Roboto", val:"'Roboto', sans-serif" },
-    { name:"Raleway", val:"'Raleway', sans-serif" }, { name:"Lato", val:"'Lato', sans-serif" },
-    { name:"Nunito", val:"'Nunito', sans-serif" }, { name:"Ubuntu", val:"'Ubuntu', sans-serif" },
-    { name:"Playfair Display", val:"'Playfair Display', serif" }, { name:"Merriweather", val:"'Merriweather', serif" },
-    { name:"Cinzel", val:"'Cinzel', serif" }, { name:"Pacifico", val:"'Pacifico', cursive" },
-    { name:"Oswald", val:"'Oswald', sans-serif" }, { name:"Space Mono", val:"'Space Mono', monospace" },
-    { name:"Courier Prime", val:"'Courier Prime', monospace" }
+    { name:"Inter (Propre)", val:"'Inter', sans-serif" }, { name:"Poppins (Moderne)", val:"'Poppins', sans-serif" },
+    { name:"Montserrat (Élégant)", val:"'Montserrat', sans-serif" }, { name:"Roboto (Classique)", val:"'Roboto', sans-serif" },
+    { name:"Raleway (Fin)", val:"'Raleway', sans-serif" }, { name:"Lato (Doux)", val:"'Lato', sans-serif" },
+    { name:"Nunito (Arrondi)", val:"'Nunito', sans-serif" }, { name:"Ubuntu (Tech)", val:"'Ubuntu', sans-serif" },
+    { name:"Playfair Display (Luxe)", val:"'Playfair Display', serif" }, { name:"Merriweather (Sérieux)", val:"'Merriweather', serif" },
+    { name:"Cinzel (Titre)", val:"'Cinzel', serif" }, { name:"Pacifico (Main)", val:"'Pacifico', cursive" },
+    { name:"Oswald (Condensé)", val:"'Oswald', sans-serif" }, { name:"Space Mono (Code)", val:"'Space Mono', monospace" }
 ];
 
 /* =======================================================================
    DONNÉES & ÉTAT
 ======================================================================= */
 let presentation = {
-    title: 'Formation & Présentations', theme: 'nuit', showPageNumbers: false,
+    title: 'Stratégie & Données 2026', theme: 'nuit', showPageNumbers: true,
     slides: [{
-        id: 1, background: { color: '#ffffff', image: null }, transition: 'trans-blur-enter', notes: '',
+        id: 1, background: { color: '#0f172a', image: null }, transition: 'trans-blur-enter', notes: 'Accueil',
         elements: [
-            { id:'e1', type:'text', content:'Formation & Présentations', x:80, y:150, width:780, fontSize:'62px', fontFamily:"'Playfair Display', serif", color:'#1e293b', fontWeight:'bold', textAlign:'left', animation:'anim-slide-up' },
-            { id:'e2', type:'text', content:"Des supports clairs, élégants et efficaces.", x:80, y:330, width:640, fontSize:'22px', fontFamily:"'Inter', sans-serif", color:'#475569', textAlign:'left', animation:'anim-fade' }
+            { id:'e1', type:'text', content:'Analyse & Stratégie', x:60, y:180, width:800, fontSize:'68px', fontFamily:"'Playfair Display', serif", color:'#ffffff', fontWeight:'bold', textAlign:'left', animation:'anim-slide-up' },
+            { id:'e2', type:'text', content:"Rapport Annuel 2026 - Outils avancés", x:60, y:300, width:600, fontSize:'24px', fontFamily:"'Inter', sans-serif", color:'#94a3b8', textAlign:'left', animation:'anim-fade' }
         ]
     }]
 };
@@ -401,80 +433,125 @@ function getCurrentSlide(){ return presentation.slides[currentSlideIndex]; }
 function saveToDB(){ localforage.setItem('presentar_backup', presentation); }
 
 /* =======================================================================
-   HISTORIQUE (ANNULER)
+   HISTORIQUE & MODALES
 ======================================================================= */
 function pushHistory(){
     historyStack.push(JSON.stringify(presentation));
-    if (historyStack.length > 40) historyStack.shift();
+    if (historyStack.length > 50) historyStack.shift();
     saveToDB();
 }
-
 function undo(){
-    if (historyStack.length === 0){ toast('Rien à annuler'); return; }
+    if (historyStack.length === 0){ toast('Rien à annuler', 'error'); return; }
     presentation = JSON.parse(historyStack.pop());
     if (currentSlideIndex >= presentation.slides.length) currentSlideIndex = presentation.slides.length - 1;
-    selectedElementId = null;
-    document.getElementById('presentation-title').value = presentation.title;
-    renderSidebar(); renderCanvas(); renderInspector();
-    toast('Action annulée');
-    saveToDB();
+    selectedElementId = null; document.getElementById('presentation-title').value = presentation.title;
+    renderSidebar(); renderCanvas(); renderInspector(); toast('Action annulée'); saveToDB();
 }
 
-/* =======================================================================
-   NOTIFICATIONS & MODALES
-======================================================================= */
 function toast(message, type){
-    const stack = document.getElementById('toast-stack');
-    const el = document.createElement('div');
-    el.className = 'toast' + (type ? ' ' + type : '');
-    el.textContent = message;
-    stack.appendChild(el);
+    const stack = document.getElementById('toast-stack'); const el = document.createElement('div');
+    el.className = 'toast' + (type ? ' ' + type : ''); el.textContent = message; stack.appendChild(el);
     requestAnimationFrame(() => el.classList.add('show'));
-    setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 300); }, 2600);
+    setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350); }, 2500);
 }
 
 function readFileAsDataURL(file){
     return new Promise((resolve, reject) => {
-        const reader = new FileReader(); reader.onload = () => resolve(reader.result);
-        reader.onerror = reject; reader.readAsDataURL(file);
+        const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file);
     });
 }
-
 function openModal(config){
     return new Promise((resolve) => {
         const root = document.getElementById('modal-root'), box = document.getElementById('modal-box');
-        let fieldsHtml = '';
+        let html = '';
         config.fields.forEach(f => {
             if (f.type === 'file'){
-                fieldsHtml += '<div class="or-sep">ou</div><div class="form-field"><label>' + f.label + '</label><div class="file-drop" onclick="document.getElementById(\'modal-file-' + f.key + '\').click()">Choisir un fichier<input type="file" id="modal-file-' + f.key + '" accept="' + (f.accept||'') + '" style="display:none" onchange="this.previousSibling && null; document.getElementById(\'modal-file-name-' + f.key + '\').textContent = this.files[0] ? this.files[0].name : \'Choisir un fichier\';"></div><div id="modal-file-name-' + f.key + '" class="small-note"></div></div>';
+                html += `<div class="or-sep">ou</div><div class="form-field"><label>${f.label}</label><div class="file-drop" onclick="document.getElementById('modal-file-${f.key}').click()">Choisir un fichier<input type="file" id="modal-file-${f.key}" accept="${f.accept||''}" style="display:none" onchange="document.getElementById('modal-fn-${f.key}').textContent = this.files[0] ? this.files[0].name : '';"></div><div id="modal-fn-${f.key}" class="small-note" style="color:var(--gold-400);"></div></div>`;
             } else {
-                fieldsHtml += '<div class="form-field"><label>' + f.label + '</label><input class="field" id="modal-field-' + f.key + '" type="text" placeholder="' + (f.placeholder||'') + '" style="width:100%;"></div>';
+                html += `<div class="form-field"><label>${f.label}</label><input class="field" id="modal-field-${f.key}" type="text" placeholder="${f.placeholder||''}"></div>`;
             }
         });
-        box.innerHTML = '<div class="modal-title">' + config.title + '</div>' + fieldsHtml + '<div class="modal-actions"><button class="btn" id="modal-cancel">Annuler</button><button class="btn btn-primary" id="modal-confirm">' + (config.confirmLabel || 'Ajouter') + '</button></div>';
+        box.innerHTML = `<div class="modal-title">${config.title}</div>${html}<div class="modal-actions"><button class="btn" id="modal-cancel">Annuler</button><button class="btn btn-primary" id="modal-confirm">${config.confirmLabel || 'Ajouter'}</button></div>`;
         root.classList.add('show');
-        const cleanup = (value) => { root.classList.remove('show'); resolve(value); };
-        document.getElementById('modal-cancel').onclick = () => cleanup(null);
-        root.onclick = (e) => { if (e.target === root) cleanup(null); };
+        const clean = (val) => { root.classList.remove('show'); resolve(val); };
+        document.getElementById('modal-cancel').onclick = () => clean(null);
         document.getElementById('modal-confirm').onclick = async () => {
-            const values = {};
-            for (const f of config.fields){
-                if (f.type === 'file'){
-                    const input = document.getElementById('modal-file-' + f.key);
-                    if (input.files && input.files[0]) values[f.key] = await readFileAsDataURL(input.files[0]); else values[f.key] = null;
-                } else { values[f.key] = document.getElementById('modal-field-' + f.key).value.trim(); }
+            const vals = {};
+            for (let f of config.fields){
+                if (f.type === 'file'){ const i = document.getElementById('modal-file-'+f.key); vals[f.key] = (i.files && i.files[0]) ? await readFileAsDataURL(i.files[0]) : null; }
+                else vals[f.key] = document.getElementById('modal-field-'+f.key).value.trim();
             }
-            cleanup(values);
+            clean(vals);
         };
     });
 }
 
 /* =======================================================================
-   RENDU BARRE LATÉRALE GAUCHE (MINIATURES)
+   OUTILS DE CRÉATION GRAPHIQUE (SVG Modernes & Formes)
+======================================================================= */
+function getModernChartSVG(type, width, height, color1, color2, color3){
+    const c1 = color1 || '#C9A430', c2 = color2 || '#E3BE55', c3 = color3 || '#475569';
+    if(type === 'modern-area'){
+        return `<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%;height:100%;overflow:visible;">
+            <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${c1}" stop-opacity="0.8"/><stop offset="100%" stop-color="${c1}" stop-opacity="0.1"/></linearGradient>
+                <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${c3}" stop-opacity="0.7"/><stop offset="100%" stop-color="${c3}" stop-opacity="0.1"/></linearGradient>
+            </defs>
+            <path d="M0,80 Q10,50 25,60 T50,40 T75,60 T100,30 L100,100 L0,100 Z" fill="url(#g2)" />
+            <path d="M0,90 Q15,70 30,85 T60,50 T80,75 T100,45 L100,100 L0,100 Z" fill="url(#g1)" />
+            <polyline fill="none" stroke="${c1}" stroke-width="1.5" points="0,90 15,75 30,85 45,65 60,50 70,60 80,75 90,55 100,45"/>
+        </svg>`;
+    } else if(type === 'modern-line'){
+        return `<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%;height:100%;overflow:visible;">
+            <g stroke="rgba(150,150,150,0.2)" stroke-width="0.5">
+                <line x1="0" y1="20" x2="100" y2="20"/><line x1="0" y1="40" x2="100" y2="40"/><line x1="0" y1="60" x2="100" y2="60"/><line x1="0" y1="80" x2="100" y2="80"/>
+            </g>
+            <polyline fill="none" stroke="${c1}" stroke-width="2.5" points="10,70 30,30 50,80 70,20 90,40" />
+            <circle cx="10" cy="70" r="3" fill="#fff" stroke="${c1}" stroke-width="2"/>
+            <circle cx="30" cy="30" r="3" fill="#fff" stroke="${c1}" stroke-width="2"/>
+            <circle cx="50" cy="80" r="3" fill="#fff" stroke="${c1}" stroke-width="2"/>
+            <circle cx="70" cy="20" r="3" fill="#fff" stroke="${c1}" stroke-width="2"/>
+            <circle cx="90" cy="40" r="3" fill="#fff" stroke="${c1}" stroke-width="2"/>
+        </svg>`;
+    } else if(type === 'modern-bar'){
+        return `<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%;height:100%;overflow:visible;">
+            <rect x="15" y="40" width="8" height="60" fill="${c1}" rx="1"/> <rect x="25" y="60" width="8" height="40" fill="${c3}" rx="1"/>
+            <rect x="40" y="20" width="8" height="80" fill="${c1}" rx="1"/> <rect x="50" y="50" width="8" height="50" fill="${c3}" rx="1"/>
+            <rect x="65" y="35" width="8" height="65" fill="${c1}" rx="1"/> <rect x="75" y="70" width="8" height="30" fill="${c3}" rx="1"/>
+            <line x1="0" y1="100" x2="100" y2="100" stroke="${c3}" stroke-width="1.5"/>
+        </svg>`;
+    } else if(type === 'modern-donut'){
+        return `<svg viewBox="0 0 100 100" style="width:100%;height:100%;overflow:visible;">
+            <circle cx="50" cy="50" r="35" fill="none" stroke="${c3}" stroke-width="12" opacity="0.2"/>
+            <circle cx="50" cy="50" r="35" fill="none" stroke="${c1}" stroke-width="12" stroke-dasharray="140 220" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="20" fill="none" stroke="${c3}" stroke-width="8" stroke-dasharray="90 125" stroke-linecap="round" stroke-dashoffset="-30"/>
+            <text x="50" y="54" font-size="14" font-weight="bold" fill="${c1}" text-anchor="middle" font-family="Inter">64%</text>
+        </svg>`;
+    }
+}
+
+function getShapeSVG(shape, w, h, fill, stroke, strokeWidth){
+    const s = stroke||'none', sw = strokeWidth||0, f = fill||'#C9A430';
+    let path = '';
+    if (shape === 'triangle') path = `<polygon points="50,5 95,95 5,95" fill="${f}" stroke="${s}" stroke-width="${sw}"/>`;
+    else if (shape === 'star') path = `<polygon points="50,5 61,35 95,35 68,55 78,85 50,65 22,85 32,55 5,35 39,35" fill="${f}" stroke="${s}" stroke-width="${sw}"/>`;
+    else if (shape === 'hexagon') path = `<polygon points="25,5 75,5 95,50 75,95 25,95 5,50" fill="${f}" stroke="${s}" stroke-width="${sw}"/>`;
+    else if (shape === 'arrow') path = `<polygon points="5,40 55,40 55,20 95,50 55,80 55,60 5,60" fill="${f}" stroke="${s}" stroke-width="${sw}"/>`;
+    
+    if(path) return `<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%;height:100%;">${path}</svg>`;
+    
+    // Rect, Ellipse, Line fallback to HTML divs for simplicity and resize handling
+    if (shape === 'ellipse') return `<div style="width:100%;height:100%;background:${f};border:${sw}px solid ${s};border-radius:50%;"></div>`;
+    if (shape === 'line') return `<div style="width:100%;height:100%;background:${s||f};border-radius:${sw}px;"></div>`;
+    return `<div style="width:100%;height:100%;background:${f};border:${sw}px solid ${s};border-radius:8px;"></div>`; // rect
+}
+
+
+/* =======================================================================
+   RENDU PRINCIPAL
 ======================================================================= */
 function renderSidebar(){
-    const container = document.getElementById('slides-container');
-    container.innerHTML = '';
+    const container = document.getElementById('slides-container'); container.innerHTML = '';
     presentation.slides.forEach((slide, idx) => {
         const thumb = document.createElement('div');
         thumb.className = 'slide-thumbnail' + (idx === currentSlideIndex ? ' active' : '');
@@ -485,27 +562,28 @@ function renderSidebar(){
         thumb.ondrop = (e) => { e.preventDefault(); thumb.classList.remove('drag-over'); onSlideDrop(idx); };
         thumb.onclick = (e) => { e.stopPropagation(); switchSlide(idx); };
         
-        const inner = document.createElement('div');
-        inner.className = 'thumb-scaler';
+        const inner = document.createElement('div'); inner.className = 'thumb-scaler';
         inner.style.backgroundColor = slide.background.color || '#ffffff';
         if (slide.background.image){ inner.style.backgroundImage = 'url(' + slide.background.image + ')'; inner.style.backgroundSize = 'cover'; }
         
         slide.elements.forEach(el => {
             const mini = document.createElement('div');
             mini.style.position = 'absolute'; mini.style.left = el.x + 'px'; mini.style.top = el.y + 'px';
-            if (el.type === 'text'){ mini.style.width = (el.width || 300) + 'px'; mini.style.fontSize = el.fontSize || '24px'; mini.style.fontFamily = el.fontFamily || 'Inter'; mini.style.color = el.color || '#000'; mini.style.fontWeight = el.fontWeight || 'normal'; mini.style.whiteSpace = 'pre-wrap'; mini.textContent = el.content; } 
-            else if (el.type === 'shape'){ mini.style.width = (el.width||200) + 'px'; mini.style.height = (el.height||100) + 'px'; mini.style.background = el.shape === 'line' ? (el.stroke || '#C9A430') : (el.fill || 'rgba(201,164,48,.18)'); mini.style.borderRadius = el.shape === 'ellipse' ? '50%' : '6px'; } 
-            else { mini.style.width = (el.width||300) + 'px'; mini.style.height = (el.height||200) + 'px'; mini.style.background = 'rgba(130,140,160,0.35)'; mini.style.borderRadius = '4px'; }
+            mini.style.width = (el.width||300)+'px'; mini.style.height = (el.height||200)+'px';
+            
+            if (el.type === 'text'){ mini.style.fontSize = el.fontSize||'24px'; mini.style.fontFamily = el.fontFamily||'Inter'; mini.style.color = el.color||'#000'; mini.style.fontWeight = el.fontWeight||'normal'; mini.style.whiteSpace = 'pre-wrap'; mini.textContent = el.content; } 
+            else if (el.type === 'shape'){ mini.innerHTML = getShapeSVG(el.shape, el.width, el.height, el.fill, el.stroke, el.strokeWidth); }
+            else if (el.type === 'chart'){ mini.innerHTML = getModernChartSVG(el.chartType, el.width, el.height, el.color1, el.color2, el.color3); }
+            else if (el.type === 'image'){ mini.style.backgroundImage = 'url('+el.content+')'; mini.style.backgroundSize = 'cover'; mini.style.borderRadius = '4px'; }
+            else { mini.style.background = 'rgba(100,100,120,0.5)'; mini.style.borderRadius = '4px'; }
             inner.appendChild(mini);
         });
         
         thumb.appendChild(inner);
         const delBtn = document.createElement('button'); delBtn.className = 'thumb-delete'; delBtn.innerHTML = icon('trash','icon-sm'); delBtn.onclick = (e) => { e.stopPropagation(); deleteSlide(idx); }; thumb.appendChild(delBtn);
         const num = document.createElement('span'); num.className = 'slide-number'; num.textContent = idx + 1; thumb.appendChild(num);
-        container.appendChild(thumb);
-        inner.style.transform = 'scale(' + (thumb.clientWidth / 960) + ')';
+        container.appendChild(thumb); inner.style.transform = 'scale(' + (thumb.clientWidth / 960) + ')';
     });
-    
     document.getElementById('bg-color-input').value = getCurrentSlide().background.color || '#ffffff';
     document.getElementById('slide-transition-select').value = getCurrentSlide().transition || 'trans-blur-enter';
 }
@@ -517,53 +595,36 @@ function onSlideDrop(targetIdx){
     const [moved] = presentation.slides.splice(draggedSlideIndex, 1);
     presentation.slides.splice(targetIdx, 0, moved);
     currentSlideIndex = presentation.slides.findIndex(s => s.id === currentId);
-    draggedSlideIndex = null;
-    renderSidebar(); renderCanvas();
+    draggedSlideIndex = null; renderSidebar(); renderCanvas();
 }
-
 function switchSlide(idx){ currentSlideIndex = idx; selectedElementId = null; renderSidebar(); renderCanvas(); renderInspector(); }
-function deleteSlide(idx){
-    if (presentation.slides.length <= 1){ toast('Dernière diapositive.', 'error'); return; }
-    pushHistory(); presentation.slides.splice(idx, 1);
-    if (currentSlideIndex >= presentation.slides.length) currentSlideIndex = presentation.slides.length - 1;
-    selectedElementId = null; renderSidebar(); renderCanvas(); renderInspector();
-}
+function deleteSlide(idx){ if (presentation.slides.length <= 1){ toast('Dernière diapositive.', 'error'); return; } pushHistory(); presentation.slides.splice(idx, 1); if (currentSlideIndex >= presentation.slides.length) currentSlideIndex = presentation.slides.length - 1; selectedElementId = null; renderSidebar(); renderCanvas(); renderInspector(); }
 
-/* =======================================================================
-   RENDU SCÈNE CENTRALE
-======================================================================= */
 function updateCanvasScale(){
-    const container = document.querySelector('.stage-container');
-    const availW = container.clientWidth - 52, availH = container.clientHeight - 52;
-    canvasScale = Math.max(0.25, Math.min(availW/960, availH/540, 2.2));
+    const container = document.querySelector('.stage-container'); const availW = container.clientWidth - 40, availH = container.clientHeight - 40;
+    canvasScale = Math.max(0.2, Math.min(availW/960, availH/540, 2.5));
     document.getElementById('canvas-scaler').style.transform = 'scale(' + canvasScale + ')';
 }
 window.addEventListener('resize', updateCanvasScale);
 
 function renderCanvas(){
-    const canvas = document.getElementById('main-canvas');
-    const slide = getCurrentSlide();
+    const canvas = document.getElementById('main-canvas'); const slide = getCurrentSlide();
     canvas.style.backgroundColor = slide.background.color || '#ffffff';
     canvas.style.backgroundImage = slide.background.image ? 'url(' + slide.background.image + ')' : 'none';
     
-    Array.from(canvas.querySelectorAll('.canvas-element, .page-number-badge')).forEach(n => n.remove());
+    Array.from(canvas.querySelectorAll('.canvas-element, .page-number-badge, .floating-context-menu')).forEach(n => n.remove());
     
     slide.elements.forEach(el => {
         const domEl = document.createElement('div');
         domEl.className = 'canvas-element' + (el.id === selectedElementId ? ' selected' : '');
         domEl.style.left = el.x + 'px'; domEl.style.top = el.y + 'px'; domEl.dataset.id = el.id;
         
-        // Molette pour zoomer la taille
+        // INTERACTION 11 : Molette souris pour zoomer/redimensionner l'élément survolé
         domEl.onwheel = (e) => {
             if (el.id === selectedElementId) {
-                e.preventDefault(); const delta = e.deltaY < 0 ? 1 : -1;
-                pushHistory();
-                if (el.type === 'text') {
-                    let size = parseInt(el.fontSize || 24); el.fontSize = Math.max(10, size + delta * 4) + 'px';
-                } else {
-                    let step = 15; let ratio = el.height / el.width;
-                    el.width = Math.max(20, el.width + delta * step); el.height = Math.max(20, el.height + delta * step * ratio);
-                }
+                e.preventDefault(); const delta = e.deltaY < 0 ? 1 : -1; pushHistory();
+                if (el.type === 'text') { el.fontSize = Math.max(10, parseInt(el.fontSize || 24) + delta * 4) + 'px'; } 
+                else { let ratio = el.height / el.width; el.width = Math.max(20, el.width + delta * 15); el.height = Math.max(20, el.height + delta * 15 * ratio); }
                 renderCanvas(); renderInspector();
             }
         };
@@ -575,50 +636,16 @@ function renderCanvas(){
             domEl.style.fontStyle = el.fontStyle || 'normal'; domEl.style.textAlign = el.textAlign || 'left';
             domEl.style.whiteSpace = 'pre-wrap'; if (el.width) domEl.style.width = el.width + 'px';
             domEl.ondblclick = (e) => { e.stopPropagation(); enableTextEdit(domEl, el); };
-        
         } else if (el.type === 'chart'){
-            const w = el.width || 400, h = el.height || 250;
-            if (el.chartType === 'line') {
-                domEl.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <polyline fill="none" stroke="#C9A430" stroke-width="3" points="0,80 20,60 40,70 60,30 80,40 100,10" />
-                    <circle cx="20" cy="60" r="2" fill="#E3BE55"/><circle cx="40" cy="70" r="2" fill="#E3BE55"/>
-                    <circle cx="60" cy="30" r="2" fill="#E3BE55"/><circle cx="80" cy="40" r="2" fill="#E3BE55"/>
-                    <line x1="0" y1="100" x2="100" y2="100" stroke="var(--ink-border-strong)" stroke-width="2"></line>
-                </svg>`;
-            } else if (el.chartType === 'donut') {
-                domEl.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#E3BE55" stroke-width="15" stroke-dasharray="100 200" stroke-dashoffset="0"></circle>
-                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#C9A430" stroke-width="15" stroke-dasharray="80 200" stroke-dashoffset="-100"></circle>
-                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#A9871F" stroke-width="15" stroke-dasharray="70 200" stroke-dashoffset="-180"></circle>
-                </svg>`;
-            } else if (el.chartType === 'bar') {
-                domEl.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <rect x="10" y="40" width="15" height="60" fill="#C9A430" rx="2"></rect>
-                    <rect x="35" y="20" width="15" height="80" fill="#E3BE55" rx="2"></rect>
-                    <rect x="60" y="50" width="15" height="50" fill="#A9871F" rx="2"></rect>
-                    <rect x="85" y="10" width="15" height="90" fill="#C9A430" rx="2"></rect>
-                    <line x1="0" y1="100" x2="100" y2="100" stroke="var(--ink-border-strong)" stroke-width="2"></line>
-                </svg>`;
-            } else { // Pie
-                domEl.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" fill="#E3BE55" ></circle>
-                    <path d="M50,50 L50,10 A40,40 0 0,1 90,50 Z" fill="#C9A430" ></path>
-                    <path d="M50,50 L90,50 A40,40 0 0,1 50,90 Z" fill="#A9871F" ></path>
-                </svg>`;
-            }
-        } else if (el.type === 'image'){ domEl.innerHTML = '<img src="' + el.content + '" style="width:100%;height:100%;">';
+            domEl.innerHTML = getModernChartSVG(el.chartType, el.width, el.height, el.color1, el.color2, el.color3);
+        } else if (el.type === 'image'){
+            domEl.innerHTML = '<img src="' + el.content + '" style="width:100%;height:100%;">';
         } else if (el.type === 'video'){
             const embed = buildYouTubeEmbed(el.content);
             if (embed) domEl.innerHTML = '<iframe src="' + embed + '" style="width:100%;height:100%;" allowfullscreen></iframe>';
             else domEl.innerHTML = '<video src="' + el.content + '" controls style="width:100%;height:100%;background:#000;"></video>';
         } else if (el.type === 'shape'){
-            if (el.shape === 'triangle') {
-                domEl.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="50,0 100,100 0,100" fill="${el.fill||'#C9A430'}" stroke="${el.stroke||'none'}" stroke-width="${el.strokeWidth||0}"></polygon></svg>`;
-            } else if (el.shape === 'star') {
-                domEl.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="50,5 61,40 98,40 68,62 79,98 50,75 21,98 32,62 2,40 39,40" fill="${el.fill||'#C9A430'}" stroke="${el.stroke||'none'}" stroke-width="${el.strokeWidth||0}"></polygon></svg>`;
-            } else {
-                domEl.innerHTML = el.shape === 'line' ? '<div style="width:100%;height:100%;background:' + (el.stroke||'#C9A430') + ';border-radius:' + (el.strokeWidth||4) + 'px;"></div>' : '<div style="width:100%;height:100%;background:' + (el.fill||'rgba(201,164,48,0.18)') + ';border:' + (el.strokeWidth ?? 2) + 'px solid ' + (el.stroke||'#C9A430') + ';border-radius:' + (el.shape==='ellipse' ? '50%' : '10px') + ';"></div>';
-            }
+            domEl.innerHTML = getShapeSVG(el.shape, el.width, el.height, el.fill, el.stroke, el.strokeWidth);
         }
         
         if (el.type !== 'text' && el.width) domEl.style.width = el.width + 'px';
@@ -632,6 +659,21 @@ function renderCanvas(){
         if (el.id === selectedElementId){
             if (el.type === 'text') domEl.appendChild(makeHandle('e', el));
             else ['nw','ne','sw','se'].forEach(c => domEl.appendChild(makeHandle(c, el)));
+            
+            // MENU FLOTTANT (Directement dans la diapositive) #1, #3, #4
+            const menu = document.createElement('div'); menu.className = 'floating-context-menu glass';
+            let fontOpts = FONTS.map(f => `<option value="${f.val}" ${el.fontFamily===f.val?'selected':''}>${f.name.split(' ')[0]}</option>`).join('');
+            
+            menu.innerHTML = `
+                <select id="ctx-font" class="field" style="width:110px;" ${el.type !== 'text' ? 'disabled' : ''}>${fontOpts}</select>
+                <input type="number" id="ctx-size" class="field field-num" value="${parseInt(el.fontSize||24)}" title="Taille" ${el.type !== 'text' ? 'disabled' : ''}>
+                <input type="color" id="ctx-color" class="field-color" value="${el.color || el.fill || el.color1 || '#ffffff'}" title="Couleur Principale">
+                <button class="btn btn-primary" style="padding:4px 10px; font-size:0.7rem;" onclick="applyContextMenu(event)">Appliquer</button>
+                <button class="btn btn-icon" style="padding:4px; height:28px; width:28px;" onclick="deleteSelected()" title="Supprimer">${icon('trash','icon-sm')}</button>
+            `;
+            menu.style.left = Math.max(0, el.x) + 'px'; menu.style.top = Math.max(0, el.y - 10) + 'px';
+            menu.onmousedown = (e) => e.stopPropagation(); menu.onclick = (e) => e.stopPropagation();
+            canvas.appendChild(menu);
         }
         canvas.appendChild(domEl);
     });
@@ -641,29 +683,38 @@ function renderCanvas(){
     }
 }
 
+// Bouton appliquer du menu flottant #4
+window.applyContextMenu = function(e) {
+    e.stopPropagation(); pushHistory();
+    const el = getCurrentSlide().elements.find(i => i.id === selectedElementId);
+    if(el) {
+        if(el.type === 'text') { el.fontFamily = document.getElementById('ctx-font').value; el.fontSize = document.getElementById('ctx-size').value + 'px'; el.color = document.getElementById('ctx-color').value; } 
+        else if(el.type === 'shape') { el.fill = document.getElementById('ctx-color').value; }
+        else if(el.type === 'chart') { el.color1 = document.getElementById('ctx-color').value; }
+        renderCanvas(); renderSidebar(); renderInspector();
+    }
+};
+
 function makeHandle(corner, el){
     const h = document.createElement('div'); h.className = 'resize-handle ' + corner;
     h.onmousedown = (e) => { e.stopPropagation(); startResize(e, el, corner); }; return h;
 }
-
 function buildYouTubeEmbed(url){
     if (!url) return null; let id = null, m = url.match(/[?&]v=([^&]+)/); if(m)id=m[1];
     if(!id){m=url.match(/youtu\.be\/([^?&]+)/);if(m)id=m[1];}
     if(!id){m=url.match(/youtube\.com\/embed\/([^?&]+)/);if(m)id=m[1];}
     return id ? ('https://www.youtube.com/embed/' + id) : null;
 }
-
 function enableTextEdit(domEl, el){
     pushHistory(); domEl.contentEditable = 'true'; domEl.focus(); document.execCommand && document.execCommand('selectAll', false, null);
     domEl.onblur = () => { domEl.contentEditable = 'false'; el.content = domEl.innerText; domEl.onblur = null; renderCanvas(); };
 }
 
-/* Drag & Drop Canvas */
+/* --- Drag & Resize --- */
 function startDrag(e, el, domEl){
     pushHistory(); isDragging = true; selectElement(el.id);
     const rect = document.getElementById('main-canvas').getBoundingClientRect();
     dragOffset.x = (e.clientX - rect.left) / canvasScale - el.x; dragOffset.y = (e.clientY - rect.top) / canvasScale - el.y;
-    dragElW = domEl.offsetWidth / canvasScale; dragElH = domEl.offsetHeight / canvasScale;
     document.onmousemove = onDragMove; document.onmouseup = onDragEnd;
 }
 function onDragMove(e){
@@ -675,7 +726,6 @@ function onDragMove(e){
 }
 function onDragEnd(){ isDragging = false; document.onmousemove = null; document.onmouseup = null; }
 
-/* Resize */
 function startResize(e, el, corner){
     pushHistory(); isResizing = true;
     resizeInfo = { el, corner, startClientX:e.clientX, startClientY:e.clientY, startX:el.x, startY:el.y, startW: el.width || 200, startH: el.height || 120 };
@@ -685,16 +735,15 @@ function onResizeMove(e){
     if (!isResizing || !resizeInfo) return;
     const { el, corner, startClientX, startClientY, startX, startY, startW, startH } = resizeInfo;
     const dx = (e.clientX - startClientX) / canvasScale, dy = (e.clientY - startClientY) / canvasScale;
-    if (corner === 'e'){ el.width = Math.max(80, startW + dx); }
-    if (corner === 'se'){ el.width = Math.max(30, startW + dx); el.height = Math.max(30, startH + dy); }
-    if (corner === 'sw'){ el.width = Math.max(30, startW - dx); el.x = startX + (startW - el.width); el.height = Math.max(30, startH + dy); }
-    if (corner === 'ne'){ el.width = Math.max(30, startW + dx); el.height = Math.max(30, startH - dy); el.y = startY + (startH - el.height); }
-    if (corner === 'nw'){ el.width = Math.max(30, startW - dx); el.x = startX + (startW - el.width); el.height = Math.max(30, startH - dy); el.y = startY + (startH - el.height); }
+    if (corner === 'e'){ el.width = Math.max(50, startW + dx); }
+    if (corner === 'se'){ el.width = Math.max(20, startW + dx); el.height = Math.max(20, startH + dy); }
+    if (corner === 'sw'){ el.width = Math.max(20, startW - dx); el.x = startX + (startW - el.width); el.height = Math.max(20, startH + dy); }
+    if (corner === 'ne'){ el.width = Math.max(20, startW + dx); el.height = Math.max(20, startH - dy); el.y = startY + (startH - el.height); }
+    if (corner === 'nw'){ el.width = Math.max(20, startW - dx); el.x = startX + (startW - el.width); el.height = Math.max(20, startH - dy); el.y = startY + (startH - el.height); }
     renderCanvas();
 }
 function onResizeEnd(){ isResizing = false; resizeInfo = null; document.onmousemove = null; document.onmouseup = null; }
 
-/* Selection */
 function selectElement(id){ selectedElementId = id; renderCanvas(); renderInspector(); }
 function deselectAll(e){
     if (e.target.id === 'main-canvas' || e.target.classList.contains('stage-container') || e.target.id === 'canvas-scaler'){
@@ -703,175 +752,156 @@ function deselectAll(e){
 }
 
 /* =======================================================================
-   INSPECTEUR (OUTILS DANS LA DIAPOSITIVE)
+   INSPECTEUR DÉTAILLÉ (DROITE)
 ======================================================================= */
 function renderInspector(){
-    const title = document.getElementById('inspector-title');
-    const container = document.getElementById('inspector-content');
+    const title = document.getElementById('inspector-title'), container = document.getElementById('inspector-content');
     const el = getCurrentSlide().elements.find(i => i.id === selectedElementId);
     
     if (!el){
-        title.textContent = 'Configuration Diapo';
-        const slide = getCurrentSlide();
+        title.textContent = 'Configuration Diapo'; const slide = getCurrentSlide();
         container.innerHTML = `
-            <div class="form-field">
-                <label>Image de fond (URL)</label>
-                <input class="field" style="width:100%;" value="${slide.background.image||''}" onchange="updateSlideBackgroundImage(this.value)">
-            </div>
+            <div class="form-field"><label>Image de fond (URL)</label><input class="field" style="width:100%;" value="${slide.background.image||''}" onchange="updateSlideBackgroundImage(this.value)"></div>
             ${slide.background.image ? `<button class="btn btn-ghost-danger" onclick="updateSlideBackgroundImage('')">Retirer</button>` : ''}
-            <hr style="border-top:1px solid var(--ink-border); margin:8px 0;">
-            <div class="form-field">
-                <label>Notes (Présentateur)</label>
-                <textarea class="field" style="width:100%;" onblur="updateSlideNotes(this.value)">${slide.notes||''}</textarea>
-            </div>
-            <p class="small-note" style="margin-top:10px;">Sélectionnez un élément pour modifier ses propriétés (Couleur, Taille, Font...).</p>`;
+            <div class="form-field" style="margin-top:10px;"><label>Notes (Présentateur)</label><textarea class="field" style="width:100%;" onblur="updateSlideNotes(this.value)">${slide.notes||''}</textarea></div>
+            <p class="small-note" style="margin-top:10px; color:var(--gold-400);">Sélectionnez un élément pour le modifier (ou utilisez le menu flottant dans la diapo).</p>`;
         return;
     }
     
-    title.textContent = el.type === 'text' ? 'Propriétés Texte' : el.type === 'image' ? 'Image' : el.type === 'video' ? 'Vidéo' : el.type === 'chart' ? 'Infographie' : 'Forme';
+    title.textContent = 'Élément : ' + (el.type === 'text' ? 'Texte' : el.type === 'image' ? 'Image' : el.type === 'video' ? 'Vidéo' : el.type === 'chart' ? 'Graphique' : 'Forme');
     let html = '';
     
-    // Contenu
     if (el.type === 'text'){ html += `<div class="form-field"><label>Texte</label><textarea class="field" id="prop-content">${el.content}</textarea></div>`; }
     else if (el.type !== 'shape' && el.type !== 'chart'){ html += `<div class="form-field"><label>URL / Source</label><input class="field" id="prop-content" value="${el.content}"></div>`; }
     
-    // Style Texte
     if(el.type === 'text'){
         let fontOptions = FONTS.map(f => `<option value="${f.val}" ${el.fontFamily===f.val?'selected':''}>${f.name}</option>`).join('');
         html += `
-            <div class="form-field" style="margin-top:8px;">
-                <label>Police de caractère</label>
-                <select class="field" id="prop-fontFamily">${fontOptions}</select>
-            </div>
+            <div class="form-field" style="margin-top:8px;"><label>Police</label><select class="field" id="prop-fontFamily">${fontOptions}</select></div>
             <div class="row-2" style="margin-top:8px;">
-                <div class="form-field"><label>Taille (px)</label><input type="number" class="field" id="prop-fontSize" value="${parseInt(el.fontSize||24)}"></div>
+                <div class="form-field"><label>Taille</label><input type="number" class="field" id="prop-fontSize" value="${parseInt(el.fontSize||24)}"></div>
                 <div class="form-field"><label>Couleur</label><input type="color" class="field-color" id="prop-color" value="${el.color||'#000000'}"></div>
             </div>
-            <div class="icon-row" style="margin-top:10px;">
+            <div class="icon-row" style="margin-top:8px;">
                 <button class="btn btn-icon ${el.fontWeight==='bold'?'active':''}" onclick="toggleStyle('fontWeight','bold','normal')"><b>B</b></button>
                 <button class="btn btn-icon ${el.fontStyle==='italic'?'active':''}" onclick="toggleStyle('fontStyle','italic','normal')"><i>I</i></button>
                 <button class="btn btn-icon ${(el.textAlign||'left')==='left'?'active':''}" onclick="setTextAlign('left')">${icon('alignLeft')}</button>
                 <button class="btn btn-icon ${(el.textAlign||'left')==='center'?'active':''}" onclick="setTextAlign('center')">${icon('alignCenter')}</button>
                 <button class="btn btn-icon ${(el.textAlign||'left')==='right'?'active':''}" onclick="setTextAlign('right')">${icon('alignRight')}</button>
-            </div>
-        `;
+            </div>`;
     }
 
-    // Propriétés Forme / Graphique
     if (el.type === 'chart'){
-        html += `<div class="form-field" style="margin-top:8px;"><label>Type Entreprise</label><select class="field" id="prop-chartType">
-            <option value="bar" ${el.chartType==='bar'?'selected':''}>Barres</option>
-            <option value="pie" ${el.chartType==='pie'?'selected':''}>Secteurs (Pie)</option>
-            <option value="line" ${el.chartType==='line'?'selected':''}>Ligne / Courbe</option>
-            <option value="donut" ${el.chartType==='donut'?'selected':''}>Donut</option>
-        </select></div>`;
+        html += `
+            <div class="form-field" style="margin-top:8px;"><label>Type Entreprise</label><select class="field" id="prop-chartType">
+                <option value="modern-area" ${el.chartType==='modern-area'?'selected':''}>Aires (Gradients)</option>
+                <option value="modern-line" ${el.chartType==='modern-line'?'selected':''}>Lignes & Points</option>
+                <option value="modern-bar" ${el.chartType==='modern-bar'?'selected':''}>Barres Comparatives</option>
+                <option value="modern-donut" ${el.chartType==='modern-donut'?'selected':''}>Donut Multi-niveaux</option>
+            </select></div>
+            <div class="row-2" style="margin-top:8px;">
+                <div class="form-field"><label>Couleur 1</label><input type="color" class="field-color" id="prop-color1" value="${el.color1||'#C9A430'}"></div>
+                <div class="form-field"><label>Couleur 2</label><input type="color" class="field-color" id="prop-color3" value="${el.color3||'#475569'}"></div>
+            </div>`;
     }
+    
     if (el.type === 'shape'){
-        html += `<div class="form-field" style="margin-top:8px;"><label>Forme</label><select class="field" id="prop-shape">
-            <option value="rect" ${el.shape==='rect'?'selected':''}>Rectangle</option>
-            <option value="ellipse" ${el.shape==='ellipse'?'selected':''}>Ellipse</option>
-            <option value="triangle" ${el.shape==='triangle'?'selected':''}>Triangle</option>
-            <option value="star" ${el.shape==='star'?'selected':''}>Étoile</option>
-            <option value="line" ${el.shape==='line'?'selected':''}>Ligne</option>
-        </select></div>`;
+        html += `
+            <div class="form-field" style="margin-top:8px;"><label>Changer Forme</label><select class="field" id="prop-shape">
+                <option value="rect" ${el.shape==='rect'?'selected':''}>Rectangle</option>
+                <option value="ellipse" ${el.shape==='ellipse'?'selected':''}>Ellipse</option>
+                <option value="triangle" ${el.shape==='triangle'?'selected':''}>Triangle</option>
+                <option value="star" ${el.shape==='star'?'selected':''}>Étoile</option>
+                <option value="hexagon" ${el.shape==='hexagon'?'selected':''}>Hexagone</option>
+                <option value="arrow" ${el.shape==='arrow'?'selected':''}>Flèche</option>
+                <option value="line" ${el.shape==='line'?'selected':''}>Ligne</option>
+            </select></div>`;
         if (el.shape !== 'line') html += `<div class="form-field" style="margin-top:8px;"><label>Remplissage</label><input type="color" class="field-color" id="prop-fill" value="${rgbaToHex(el.fill)||'#c9a430'}"></div>`;
         html += `<div class="row-2" style="margin-top:8px;">
             <div class="form-field"><label>Contour</label><input type="color" class="field-color" id="prop-stroke" value="${el.stroke||'#C9A430'}"></div>
-            <div class="form-field"><label>Épaisseur</label><input type="number" class="field" id="prop-strokeWidth" value="${el.strokeWidth??2}"></div>
+            <div class="form-field"><label>Épaisseur</label><input type="number" class="field field-num" id="prop-strokeWidth" value="${el.strokeWidth??2}"></div>
         </div>`;
     }
 
-    // Animation & Boutons de contrôle
     html += `
         <div class="form-field" style="margin-top:12px;">
-            <label>Animation Élément</label>
+            <label>Animation (Entrée)</label>
             <select class="field" id="prop-animation">
                 <option value="" ${!el.animation?'selected':''}>Aucune</option>
-                <option value="anim-fade" ${el.animation==='anim-fade'?'selected':''}>Fondu</option>
-                <option value="anim-slide-up" ${el.animation==='anim-slide-up'?'selected':''}>Glissement Haut</option>
-                <option value="anim-slide-left" ${el.animation==='anim-slide-left'?'selected':''}>Glissement Gauche</option>
-                <option value="anim-slide-right" ${el.animation==='anim-slide-right'?'selected':''}>Glissement Droite</option>
-                <option value="anim-pop" ${el.animation==='anim-pop'?'selected':''}>Apparition Pop</option>
+                <option value="anim-fade" ${el.animation==='anim-fade'?'selected':''}>Fondu Simple</option>
+                <option value="anim-slide-up" ${el.animation==='anim-slide-up'?'selected':''}>Slide Haut</option>
+                <option value="anim-slide-left" ${el.animation==='anim-slide-left'?'selected':''}>Slide Gauche</option>
+                <option value="anim-slide-right" ${el.animation==='anim-slide-right'?'selected':''}>Slide Droite</option>
+                <option value="anim-pop" ${el.animation==='anim-pop'?'selected':''}>Pop Apparition</option>
             </select>
         </div>
-        
         <div class="row-2" style="margin-top:12px;">
             <button class="btn btn-icon" title="Avancer" onclick="reorderLayer('front')">${icon('front')}</button>
             <button class="btn btn-icon" title="Reculer" onclick="reorderLayer('back')">${icon('back')}</button>
         </div>
-
-        <button class="btn btn-primary" style="margin-top:16px; width:100%;" onclick="applyProperties()">APPLIQUER</button>
-        <button class="btn btn-ghost-danger" style="margin-top:8px; width:100%;" onclick="deleteSelected()">
-            ${icon('trash','icon-sm')}<span>Supprimer l'élément</span>
-        </button>
+        <button class="btn btn-primary" style="margin-top:16px; width:100%;" onclick="applyProperties()">APPLIQUER (Panneau)</button>
+        <button class="btn btn-ghost-danger" style="margin-top:8px; width:100%;" onclick="deleteSelected()">${icon('trash','icon-sm')}<span>Supprimer</span></button>
     `;
     
     container.innerHTML = html;
 }
 
 window.applyProperties = function() {
-    const el = getCurrentSlide().elements.find(i => i.id === selectedElementId);
-    if (!el) return;
-    pushHistory();
-    
+    const el = getCurrentSlide().elements.find(i => i.id === selectedElementId); if (!el) return; pushHistory();
     if(document.getElementById('prop-content')) el.content = document.getElementById('prop-content').value;
     if(document.getElementById('prop-fontFamily')) el.fontFamily = document.getElementById('prop-fontFamily').value;
     if(document.getElementById('prop-fontSize')) el.fontSize = document.getElementById('prop-fontSize').value + 'px';
     if(document.getElementById('prop-color')) el.color = document.getElementById('prop-color').value;
-    
     if(document.getElementById('prop-chartType')) el.chartType = document.getElementById('prop-chartType').value;
-    
+    if(document.getElementById('prop-color1')) el.color1 = document.getElementById('prop-color1').value;
+    if(document.getElementById('prop-color3')) el.color3 = document.getElementById('prop-color3').value;
     if(document.getElementById('prop-shape')) el.shape = document.getElementById('prop-shape').value;
     if(document.getElementById('prop-fill')) el.fill = document.getElementById('prop-fill').value;
     if(document.getElementById('prop-stroke')) el.stroke = document.getElementById('prop-stroke').value;
     if(document.getElementById('prop-strokeWidth')) el.strokeWidth = parseInt(document.getElementById('prop-strokeWidth').value);
-    
     if(document.getElementById('prop-animation')) el.animation = document.getElementById('prop-animation').value;
-    
-    renderCanvas(); renderSidebar(); renderInspector();
-    toast("Propriétés appliquées", "success");
+    renderCanvas(); renderSidebar(); renderInspector(); toast("Propriétés appliquées", "success");
 };
 
 function rgbaToHex(v){ if (!v || v.indexOf('rgba') === -1) return v; return null; }
-
 function toggleStyle(p, v1, v2){ const el = getCurrentSlide().elements.find(i => i.id === selectedElementId); if(el){ pushHistory(); el[p] = el[p]===v1?v2:v1; renderCanvas(); renderInspector(); } }
 function setTextAlign(v){ const el = getCurrentSlide().elements.find(i => i.id === selectedElementId); if(el && el.type==='text'){ pushHistory(); el.textAlign=v; renderCanvas(); renderInspector(); } }
 function reorderLayer(dir){ const slide = getCurrentSlide(); const idx = slide.elements.findIndex(i => i.id === selectedElementId); if (idx===-1) return; pushHistory(); const [el] = slide.elements.splice(idx,1); if (dir==='front') slide.elements.push(el); else slide.elements.unshift(el); renderCanvas(); }
 function deleteSelected(){ pushHistory(); getCurrentSlide().elements = getCurrentSlide().elements.filter(i => i.id !== selectedElementId); selectedElementId = null; renderCanvas(); renderInspector(); renderSidebar(); }
 
 /* =======================================================================
-   OUTILS D'AJOUT
+   ACTIONS GLOBALES (Ajout) #1, #2, #5, #6, #10
 ======================================================================= */
 function addNewSlide(){ pushHistory(); presentation.slides.push({ id:Date.now(), background:{color:'#ffffff', image:null}, transition:'trans-blur-enter', notes:'', elements:[] }); switchSlide(presentation.slides.length - 1); }
-function updateSlideTransition(v){ pushHistory(); getCurrentSlide().transition = v; }
+function updateSlideTransition(v){ pushHistory(); getCurrentSlide().transition = v; saveToDB(); }
 function updateSlideBackgroundColor(v){ pushHistory(); getCurrentSlide().background.color = v; renderSidebar(); renderCanvas(); }
 function updateSlideBackgroundImage(v){ pushHistory(); getCurrentSlide().background.image = v || null; renderSidebar(); renderCanvas(); renderInspector(); }
 function updateSlideNotes(v){ getCurrentSlide().notes = v; saveToDB(); }
 
-function addTextElement(){ pushHistory(); const el = { id:'el_'+Date.now(), type:'text', content:'Nouveau texte', x:300, y:200, fontSize:'32px', fontFamily:"'Inter', sans-serif", color:'#000000', textAlign:'left', animation:'anim-slide-up', width:400 }; getCurrentSlide().elements.push(el); selectElement(el.id); renderSidebar(); }
-async function promptAddImage(){ const res = await openModal({ title:'Image', fields:[{key:'url',type:'text',label:'URL'},{key:'file',type:'file',label:'Fichier',accept:'image/*'}]}); if(res && (res.file||res.url)){ pushHistory(); getCurrentSlide().elements.push({ id:'el_'+Date.now(), type:'image', content:res.file||res.url, x:120, y:120, width:400, height:280, animation:'anim-pop' }); renderCanvas(); renderSidebar(); } }
-async function promptAddVideo(){ const res = await openModal({ title:'Vidéo', fields:[{key:'url',type:'text',label:'URL/YouTube'},{key:'file',type:'file',label:'Fichier',accept:'video/*'}]}); if(res && (res.file||res.url)){ pushHistory(); getCurrentSlide().elements.push({ id:'el_'+Date.now(), type:'video', content:res.file||res.url, x:100, y:100, width:560, height:315, animation:'anim-pop' }); renderCanvas(); renderSidebar(); } }
-function addChartElement(type){ pushHistory(); getCurrentSlide().elements.push({ id:'el_'+Date.now(), type:'chart', chartType: type||'bar', x:280, y:150, width:400, height:250, animation:'anim-fade' }); renderCanvas(); renderSidebar(); }
-function addShapeElement(shape){ pushHistory(); getCurrentSlide().elements.push({ id:'el_'+Date.now(), type:'shape', shape:shape||'rect', x:280, y:190, width:400, height:160, fill:'rgba(201,164,48,0.15)', stroke:'#C9A430', strokeWidth:2, animation:'anim-fade' }); renderCanvas(); renderSidebar(); }
+// #10 Ajout multiple de texte avec polices indépendantes
+function addTextElement(){ pushHistory(); const el = { id:'el_'+Date.now(), type:'text', content:'Double-clic pour éditer', x:350, y:200, fontSize:'42px', fontFamily:"'Inter', sans-serif", color:'#000000', textAlign:'left', animation:'anim-slide-up', width:400 }; getCurrentSlide().elements.push(el); selectElement(el.id); renderSidebar(); }
+async function promptAddImage(){ const res = await openModal({ title:'Image', fields:[{key:'url',type:'text',label:'URL (Lien)'},{key:'file',type:'file',label:'Fichier Local',accept:'image/*'}]}); if(res && (res.file||res.url)){ pushHistory(); getCurrentSlide().elements.push({ id:'el_'+Date.now(), type:'image', content:res.file||res.url, x:120, y:120, width:400, height:280, animation:'anim-pop' }); renderCanvas(); renderSidebar(); } }
+async function promptAddVideo(){ const res = await openModal({ title:'Vidéo', fields:[{key:'url',type:'text',label:'URL / Lien YouTube'},{key:'file',type:'file',label:'Fichier MP4',accept:'video/*'}]}); if(res && (res.file||res.url)){ pushHistory(); getCurrentSlide().elements.push({ id:'el_'+Date.now(), type:'video', content:res.file||res.url, x:100, y:100, width:560, height:315, animation:'anim-pop' }); renderCanvas(); renderSidebar(); } }
+
+function addChartElement(type){ pushHistory(); getCurrentSlide().elements.push({ id:'el_'+Date.now(), type:'chart', chartType: type||'modern-area', color1:'#C9A430', color3:'#475569', x:280, y:120, width:400, height:280, animation:'anim-fade' }); renderCanvas(); renderSidebar(); }
+function addShapeElement(shape){ pushHistory(); getCurrentSlide().elements.push({ id:'el_'+Date.now(), type:'shape', shape:shape||'rect', x:350, y:190, width:250, height:150, fill:'rgba(201,164,48,0.15)', stroke:'#C9A430', strokeWidth:2, animation:'anim-fade' }); renderCanvas(); renderSidebar(); }
 
 function setTheme(name){ presentation.theme = name; document.body.className = name==='papier'?'theme-papier':''; document.querySelectorAll('.theme-swatch').forEach(b => b.classList.toggle('active', b.dataset.theme===name)); saveToDB(); }
-function togglePageNumbers(){ presentation.showPageNumbers = !presentation.showPageNumbers; document.getElementById('btn-page-numbers').classList.toggle('active', presentation.showPageNumbers); renderCanvas(); saveToDB(); }
 
 /* =======================================================================
-   EXPORT / IMPORT
+   EXPORT / IMPORT #8
 ======================================================================= */
 function exportPagesData(){
     const blob = new Blob([JSON.stringify(presentation)], { type:'application/json' });
     const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url;
     a.download = (presentation.title||'presentation').replace(/[^a-z0-9\-_ ]/gi,'').trim() + '.pages.data';
-    a.click(); URL.revokeObjectURL(url); toast('Format natif exporté', 'success');
+    a.click(); URL.revokeObjectURL(url); toast('Format Natif (pages.data) exporté', 'success');
 }
 
 function exportPPT(){
-    if(typeof PptxGenJS === 'undefined') { toast("Erreur de librairie", "error"); return; }
+    if(typeof PptxGenJS === 'undefined') { toast("Erreur réseau: Librairie PPTX non chargée", "error"); return; }
     toast("Génération PowerPoint en cours...", "success");
-    let pptx = new PptxGenJS();
-    pptx.title = presentation.title;
+    let pptx = new PptxGenJS(); pptx.title = presentation.title;
     
     presentation.slides.forEach(slide => {
         let pptSlide = pptx.addSlide();
@@ -879,13 +909,14 @@ function exportPPT(){
         if(slide.notes) pptSlide.addNotes(slide.notes);
         
         slide.elements.forEach(el => {
-            const x = (el.x / 960) * 10, y = (el.y / 540) * 5.625; // Convertir px vers pouces approximatifs
+            const x = (el.x / 960) * 10, y = (el.y / 540) * 5.625; // Conversion approx. pouces
             const w = (el.width / 960) * 10, h = (el.height / 540) * 5.625;
             
             if(el.type === 'text') {
                 pptSlide.addText(el.content, { x:x, y:y, w:w, h:1, fontSize: parseInt(el.fontSize)/1.5, color: el.color.replace('#',''), bold: el.fontWeight==='bold', italic: el.fontStyle==='italic' });
-            } else if(el.type === 'shape') {
-                pptSlide.addShape(pptx.shapes.RECTANGLE, { x:x, y:y, w:w, h:h, fill: {color: (el.stroke||'#C9A430').replace('#','')} });
+            } else if(el.type === 'shape' && (el.shape === 'rect' || el.shape === 'ellipse')) {
+                let s = el.shape==='ellipse' ? pptx.shapes.OVAL : pptx.shapes.RECTANGLE;
+                pptSlide.addShape(s, { x:x, y:y, w:w, h:h, fill: {color: (el.stroke||'#C9A430').replace('#','')} });
             }
         });
     });
@@ -898,14 +929,13 @@ function importProjectFile(file){
         try { const data = JSON.parse(reader.result); if (!data.slides) throw new Error();
             pushHistory(); presentation = data; currentSlideIndex = 0; selectedElementId = null;
             document.getElementById('presentation-title').value = presentation.title||''; setTheme(presentation.theme||'nuit');
-            document.getElementById('btn-page-numbers').classList.toggle('active', !!presentation.showPageNumbers);
-            renderSidebar(); renderCanvas(); renderInspector(); toast('Projet importé');
-        } catch (err){ toast('Fichier invalide.', 'error'); }
+            renderSidebar(); renderCanvas(); renderInspector(); toast('Projet importé avec succès', 'success');
+        } catch (err){ toast('Fichier invalide ou corrompu.', 'error'); }
     }; reader.readAsText(file);
 }
 
 /* =======================================================================
-   MODE PRÉSENTATION & LASER/DESSIN
+   MODE PRÉSENTATION & LASER (#7)
 ======================================================================= */
 function startPresentation(){
     presentIndex = currentSlideIndex;
@@ -931,21 +961,23 @@ function exitPresentation(){
     document.getElementById('presentation-stage').innerHTML = ''; isLaserActive = false; document.getElementById('laser-pointer').classList.remove('active');
     clearInterval(presentTimerHandle); clearTimeout(controlsHideTimeout);
 }
-
 document.addEventListener('fullscreenchange', () => { const overlay = document.getElementById('presentation-overlay'); if (!document.fullscreenElement && overlay.classList.contains('active')) exitPresentation(); });
 
 function onPresentMouseDown(e){
+    if(e.target.closest('.present-controls')) return; // ignore clicks on controls
     document.getElementById('laser-pointer').classList.add('clicking'); clickStartX = e.clientX; clickStartY = e.clientY;
     if(isLaserActive && drawCtx) { isDrawing = true; drawCtx.beginPath(); drawCtx.moveTo(e.clientX, e.clientY); }
 }
 function onPresentMouseUp(e){
+    if(e.target.closest('.present-controls')) return;
     document.getElementById('laser-pointer').classList.remove('clicking'); isDrawing = false;
-    if (Math.abs(e.clientX - clickStartX) < 5 && Math.abs(e.clientY - clickStartY) < 5 && !isLaserActive) { nextPresentSlide(); } // Clic = next slide
+    // Si la souris n'a pas bougé (pas un dessin) = Clic simple = Slide Suivant (#7)
+    if (Math.abs(e.clientX - clickStartX) < 10 && Math.abs(e.clientY - clickStartY) < 10 && !isLaserActive) { nextPresentSlide(); }
 }
 function handleOverlayMouseMove(e){
     if (isLaserActive) {
         const pointer = document.getElementById('laser-pointer'); pointer.style.left = e.clientX + 'px'; pointer.style.top = e.clientY + 'px';
-        if(isDrawing && drawCtx) { drawCtx.strokeStyle = pointer.style.backgroundColor || '#ff2d4d'; drawCtx.lineWidth = 4; drawCtx.lineTo(e.clientX, e.clientY); drawCtx.stroke(); }
+        if(isDrawing && drawCtx) { drawCtx.strokeStyle = pointer.style.backgroundColor || '#ff2d4d'; drawCtx.lineWidth = 6; drawCtx.lineTo(e.clientX, e.clientY); drawCtx.stroke(); }
     }
     resetControlsHideTimer();
 }
@@ -958,11 +990,11 @@ function updatePresentTimer(){
     const secs = Math.floor((Date.now() - presentStartTime) / 1000); const m = String(Math.floor(secs/60)).padStart(2,'0'), s = String(secs%60).padStart(2,'0');
     document.getElementById('present-timer').textContent = m + ':' + s;
 }
+
+// Touches Laser R, G, B (#7)
 function handlePresentKey(e){
     if (e.key === 'ArrowRight' || e.key === ' ') nextPresentSlide(); else if (e.key === 'ArrowLeft') prevPresentSlide(); else if (e.key === 'Escape') exitPresentation();
-    else if (e.key.toLowerCase() === 'l' && !isLaserActive){
-        isLaserActive = true; document.getElementById('laser-pointer').classList.add('active'); setLaserColor('#ff2d4d');
-    }
+    else if (e.key.toLowerCase() === 'l' && !isLaserActive){ isLaserActive = true; document.getElementById('laser-pointer').classList.add('active'); setLaserColor('#ff2d4d'); }
     else if (e.key.toLowerCase() === 'r' && isLaserActive) setLaserColor('#ff2d4d');
     else if (e.key.toLowerCase() === 'g' && isLaserActive) setLaserColor('#2dff7d');
     else if (e.key.toLowerCase() === 'b' && isLaserActive) setLaserColor('#2d89ff');
@@ -988,14 +1020,17 @@ function renderPresentSlide(){
             domEl.style.fontFamily = el.fontFamily; domEl.style.color = el.color; domEl.style.fontWeight = el.fontWeight; domEl.style.fontStyle = el.fontStyle; domEl.style.textAlign = el.textAlign || 'left'; domEl.style.whiteSpace = 'pre-wrap';
             if (el.width) domEl.style.width = 'calc(' + el.width + ' * (100vw / 960))';
         } else if (el.type === 'image'){
-            domEl.innerHTML = '<img src="' + el.content + '" style="width:calc(' + el.width + ' * (100vw / 960));height:calc(' + el.height + ' * (100vw / 960));object-fit:cover;border-radius:4px;">';
+            domEl.innerHTML = '<img src="' + el.content + '" style="width:calc(' + el.width + ' * (100vw / 960));height:calc(' + el.height + ' * (100vw / 960));object-fit:cover;border-radius:6px;">';
         } else if (el.type === 'video'){
             const w = 'calc(' + el.width + ' * (100vw / 960))', h = 'calc(' + el.height + ' * (100vw / 960))'; const embed = buildYouTubeEmbed(el.content);
             if (embed) domEl.innerHTML = '<iframe src="' + embed + '?autoplay=1" style="width:' + w + ';height:' + h + ';border:none;" allow="autoplay" allowfullscreen></iframe>';
             else domEl.innerHTML = '<video src="' + el.content + '" autoplay controls style="width:' + w + ';height:' + h + ';"></video>';
-        } else { // Shapes et charts utilisent la même logique d'échelle simple ici (simplifié pour démo)
+        } else if (el.type === 'chart'){
             const w = 'calc(' + el.width + ' * (100vw / 960))', h = 'calc(' + el.height + ' * (100vw / 960))';
-            domEl.innerHTML = `<div style="width:${w};height:${h};background:${el.fill||el.stroke||'#C9A430'}; border-radius:${el.shape==='ellipse'?'50%':'4px'}; opacity:0.8;"></div>`;
+            domEl.innerHTML = `<div style="width:${w};height:${h};">${getModernChartSVG(el.chartType, el.width, el.height, el.color1, el.color2, el.color3)}</div>`;
+        } else if (el.type === 'shape'){
+            const w = 'calc(' + el.width + ' * (100vw / 960))', h = 'calc(' + el.height + ' * (100vw / 960))';
+            domEl.innerHTML = `<div style="width:${w};height:${h};">${getShapeSVG(el.shape, el.width, el.height, el.fill, el.stroke, el.strokeWidth)}</div>`;
         }
         stage.appendChild(domEl);
     });
@@ -1004,7 +1039,7 @@ function nextPresentSlide(){ if (presentIndex < presentation.slides.length - 1){
 function prevPresentSlide(){ if (presentIndex > 0){ presentIndex--; renderPresentSlide(); } }
 
 /* =======================================================================
-   INITIALISATION & RACCOURCIS
+   INITIALISATION (IndexedDB)
 ======================================================================= */
 document.addEventListener('keydown', (e) => {
     if (document.getElementById('presentation-overlay').classList.contains('active')) return;
@@ -1019,22 +1054,23 @@ window.onload = () => {
     document.querySelector('#present-prev').innerHTML = icon('chevronLeft');
     document.querySelector('#present-next').innerHTML = icon('chevronRight');
     document.querySelector('#present-exit').innerHTML = icon('close');
-    document.getElementById('btn-page-numbers').innerHTML = icon('hash');
-    document.querySelectorAll('.header-actions .btn-icon')[1].innerHTML = icon('download');
-    document.querySelectorAll('.header-actions .btn-icon')[2].innerHTML = icon('ppt');
-    document.querySelectorAll('.header-actions .btn-icon')[3].innerHTML = icon('upload');
+    document.querySelectorAll('.header-actions .btn-icon')[0].innerHTML = icon('download');
+    document.querySelectorAll('.header-actions .btn-icon')[1].innerHTML = icon('ppt');
+    document.querySelectorAll('.header-actions .btn-icon')[2].innerHTML = icon('upload');
     document.querySelector('.btn-primary').innerHTML = icon('play') + '<span>Présenter</span>';
     
     document.getElementById('btn-add-text').innerHTML = icon('type') + '<span>Texte</span>';
     document.getElementById('btn-add-image').innerHTML = icon('image') + '<span>Image</span>';
     document.getElementById('btn-add-video').innerHTML = icon('video') + '<span>Vidéo</span>';
-    document.getElementById('btn-add-shape').innerHTML = icon('shape') + '<span>Forme</span>';
-    document.getElementById('btn-add-chart').innerHTML = icon('chart') + '<span>Graph.</span>';
-    document.getElementById('btn-add-slide').innerHTML = icon('plus') + '<span>Diapo.</span>';
+    document.getElementById('btn-add-shape').innerHTML = icon('shape') + '<span>Formes ▼</span>';
+    document.getElementById('btn-add-chart').innerHTML = icon('chart') + '<span>Graph. ▼</span>';
+    document.getElementById('btn-add-slide').innerHTML = icon('plus') + '<span>Diapo</span>';
 
-    // Restauration IndexedDB (Mémoire cache)
+    // Récupération Mémoire (IndexedDB) via LocalForage (#2)
     localforage.getItem('presentar_backup').then(data => {
-        if (data && data.slides) { presentation = data; toast("Projet restauré depuis la mémoire", "success"); }
+        if (data && data.slides) { presentation = data; toast("Projet restauré", "success"); }
+        document.getElementById('presentation-title').value = presentation.title || 'Stratégie & Données 2026';
+        setTheme(presentation.theme || 'nuit');
         updateCanvasScale(); renderSidebar(); renderCanvas(); renderInspector();
     }).catch(() => { updateCanvasScale(); renderSidebar(); renderCanvas(); renderInspector(); });
 };
